@@ -6,6 +6,8 @@ const MainContainer = () =>{
 
     }
 
+    const meso = 900
+
     return (
         <div className={styles.mainContainer}>
 

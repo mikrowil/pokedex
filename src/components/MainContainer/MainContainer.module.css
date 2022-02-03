@@ -1,0 +1,10 @@
+.mainContainer{
+    display: flex;
+    flex: 1;
+
+    justify-content: center;
+
+    outline: 2px dotted red;
+
+    padding: 3%;
+}

@@ -1,11 +1,17 @@
+import React from "react";
+import {List, ListItem, ListItemText} from "@mui/material";
+
 
 const PokemonList = ({pokemon}) =>{
+
     return(
-        <div>
-            {pokemon.map((pokemon)=>(
-                <div>{pokemon.name}</div>
+        <List>
+            {pokemon && pokemon.map((pokemon)=>(
+                <ListItem key={pokemon.name}>
+                    <ListItemText>{pokemon.name}</ListItemText>
+                </ListItem>
             ))}
-        </div>
+        </List>
     )
 }
 

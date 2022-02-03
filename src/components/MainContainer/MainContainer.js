@@ -6,6 +6,10 @@ const MainContainer = () =>{
 
     }
 
+    const happyman = 56;
+
+
+
     return (
         <div className={styles.mainContainer}>
 

@@ -1,11 +1,14 @@
 import styles from './Header.module.css'
+import {Typography} from "@mui/material";
 
-const Header = () =>{
+const Header = () => {
     return (
         <div className={styles.header}>
-            <div className={styles.headerTitle}>
+
+            <Typography variant={"h2"}>
                 Pokedex
-            </div>
+            </Typography>
+
         </div>
     )
 }

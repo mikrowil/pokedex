@@ -1,15 +1,50 @@
-import styles from './Header.module.css'
-import {Typography} from "@mui/material";
+import styled from "styled-components";
+import {Link, Typography} from "@mui/material";
+
+const Container = styled.div`
+  display: flex;
+  padding: 0.5rem 1rem;
+  
+  align-items: center;
+  
+  border-bottom: 1px solid ${({theme})=> theme.palette.secondary.light};
+`
+
+const NavContainer = styled.div`
+  display: flex;
+  flex: 1;
+  
+  align-items: center;
+  
+  margin: 0 2rem;
+`
+
+const navItems = [
+    {title:"pokemon"}
+]
 
 const Header = () => {
     return (
-        <div className={styles.header}>
+        <Container>
 
-            <Typography variant={"h2"}>
+            <Typography variant={"h5"}>
                 Pokedex
             </Typography>
 
-        </div>
+            <NavContainer>
+                {
+                    navItems.map(({title})=>(
+                        <Link>
+                            {title}
+                        </Link>
+                    ))
+                }
+            </NavContainer>
+
+            <Typography>
+                Profile
+            </Typography>
+        </Container>
     )
 }
 

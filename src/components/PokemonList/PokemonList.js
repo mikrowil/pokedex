@@ -6,7 +6,6 @@ import {useNavigate} from "react-router-dom";
 const Container = styled.div`
   display: flex;
   flex: 1;
-  max-width: 800px;
   
   margin: 0 auto;
 `

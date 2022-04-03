@@ -1,8 +1,9 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
+import pokeapi from "../api/pokeapi";
 
 
-const usePokemonDetails = (url) =>{
+const usePokemonDetails = (name) =>{
     const [pokemon, setPokemon] = useState({
         abilities:[],
         base_experience:0,
@@ -24,17 +25,27 @@ const usePokemonDetails = (url) =>{
         weight:0
     })
 
+    const [species,setSpecies] = useState({})
+
+    const [isLoading, setIsLoading] = useState(false)
+
     const fetchPokemonDetails = async () =>{
-        const results = (await axios.get(url)).data
+        setIsLoading(true)
+
+        const results = (await pokeapi.get(`/pokemon/${name}`)).data
+        const speciesRes = (await pokeapi.get(`/pokemon-species/${name}`)).data
 
         setPokemon(results)
+        setSpecies(speciesRes)
+
+        setIsLoading(false)
     };
 
     useEffect(()=>{
         fetchPokemonDetails().then();
     },[])
 
-    return pokemon
+    return {pokemon, species, isLoading}
 }
 
 export default usePokemonDetails

@@ -1,4 +1,4 @@
-import MainContainer from "../components/MainContainer/MainContainer";
+import MainContainer from "../screens/MainContainer/MainContainer";
 import DisplayPokemon from "../screens/DisplayPokemon";
 
 const navigator = [

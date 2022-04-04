@@ -28,7 +28,7 @@ const Section = styled.div`
 
   flex-direction: column;
 
-  margin: 1rem auto;
+  margin: auto;
 
   align-items: center;
 
@@ -65,50 +65,73 @@ export default function DisplayPokemon(){
     return(
         <Container>
             <InnerContainer>
-                <Button
-                    variant={"outlined"}
-                    onClick={()=>{navigate(-1)}}
-                    startIcon={<Icon>arrow_back</Icon>}
-                >
-                    go back
-                </Button>
 
-                {!isLoading ? <div>
-                    <Section>
-                        <ShinyToggle onClick={()=>setIsShiny(!isShiny)}>{isShiny ? "star": "star_border"}</ShinyToggle>
-                        <img src={pokemon.sprites[isShiny ? "front_shiny" :"front_default"]} width={200} height={200} alt={"Pokemon"}/>
-                        <Typography variant={"h5"}>
-                            {pokemon.name}
-                        </Typography>
-                    </Section>
-
-                    <Section>
-                        <Grid container>
-                            <Grid item xs={6}>Height: {pokemon.height}</Grid>
-                            <Grid item xs={6}>Weight: {pokemon.weight}</Grid>
-                            <Grid item xs={6}>ID: {pokemon.id}</Grid>
-                            <Grid item xs={6}>Base experience: {pokemon.base_experience}</Grid>
-                            <Grid item xs={6}>Base happiness: {species.base_happiness}</Grid>
-                            <Grid item xs={6}>Capture rate: {species.capture_rate}</Grid>
-                        </Grid>
-                    </Section>
-
-                    <Section>
-                        {
-                            openMoves ?
-                                pokemon.moves.map((move)=>(
-                                    <Typography>{move.move.name}</Typography>
-                                )):<Typography>
-                                    Moves
-                                </Typography>
-                        }
-
-                        <Button onClick={()=>{setOpenMoves(!openMoves)}}>
-                            {openMoves ? "close" : "open"}
+                <Grid container spacing={2}>
+                    <Grid item xs={12}>
+                        <Button
+                            variant={"outlined"}
+                            onClick={()=>{navigate(-1)}}
+                            startIcon={<Icon>arrow_back</Icon>}
+                        >
+                            go back
                         </Button>
-                    </Section>
+                    </Grid>
 
-                </div>: <CircularProgress />}
+                    {!isLoading ? <>
+                        <Grid item xs={12} md={3}>
+                            <Section>
+                                <ShinyToggle onClick={()=>setIsShiny(!isShiny)}>{isShiny ? "star": "star_border"}</ShinyToggle>
+                                <img src={pokemon.sprites[isShiny ? "front_shiny" :"front_default"]} width={200} height={200} alt={"Pokemon"}/>
+                                <Typography variant={"h5"}>
+                                    {pokemon.name}
+                                </Typography>
+                            </Section>
+                        </Grid>
+
+                        <Grid item xs={12} md={9}>
+                            <Section style={{height:"100%"}}>
+                                <Grid container>
+                                    <Grid item xs={6}>
+                                        <Typography>Height: {pokemon.height}</Typography>
+                                    </Grid>
+                                    <Grid item xs={6}>
+                                        <Typography>Weight: {pokemon.weight}</Typography>
+                                    </Grid>
+                                    <Grid item xs={6}>
+                                        <Typography>ID: {pokemon.id}</Typography>
+                                    </Grid>
+                                    <Grid item xs={6}>
+                                        <Typography>Base experience: {pokemon.base_experience}</Typography>
+                                    </Grid>
+                                    <Grid item xs={6}>
+                                        <Typography>Base happiness: {species.base_happiness}</Typography>
+                                    </Grid>
+                                    <Grid item xs={6}>
+                                        <Typography>Capture rate: {species.capture_rate}</Typography>
+                                    </Grid>
+                                </Grid>
+                            </Section>
+                        </Grid>
+
+                        <Grid item xs={12}>
+                            <Section>
+                                {
+                                    openMoves ?
+                                        pokemon.moves.map((move)=>(
+                                            <Typography>{move.move.name}</Typography>
+                                        )):<Typography>
+                                            Moves
+                                        </Typography>
+                                }
+
+                                <Button onClick={()=>{setOpenMoves(!openMoves)}}>
+                                    {openMoves ? "close" : "open"}
+                                </Button>
+                            </Section>
+                        </Grid>
+
+                    </>: <CircularProgress />}
+                </Grid>
 
             </InnerContainer>
         </Container>

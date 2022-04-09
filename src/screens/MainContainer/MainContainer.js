@@ -4,14 +4,13 @@ import {Button, Typography} from "@mui/material";
 import styled from "styled-components";
 
 const Container = styled.div`
-  padding: 1rem;
 
   display: flex;
   flex: 1;
   flex-direction: column;
 
   margin: 1rem auto;
-
+  padding: 1rem;
 
   max-width: 1200px;
 `

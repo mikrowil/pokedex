@@ -11,13 +11,24 @@ const Container = styled.div`
 `
 
 const Item = styled.div`
-  
-  background-color: ${({theme})=> theme.palette.grey[100]};
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  cursor: pointer;
+
+  background-color: ${({theme}) => theme.palette.grey[100]};
   border-radius: 10px;
-  
-  margin:3%;
-  padding: 3%;
-  
+
+  padding: 2%;
+
+  background: linear-gradient(to left, ${({theme}) => theme.palette.grey[100]} 50%, ${({theme}) => theme.palette.secondary.light} 50%) right;
+  background-size: 200%;
+  transition: .5s ease;
+
+  &:hover {
+    background-position: left;
+  }
 `
 
 const PokemonList = ({pokemon}) =>{
@@ -30,7 +41,7 @@ const PokemonList = ({pokemon}) =>{
 
     return(
         <Container>
-            <Grid container>
+            <Grid container spacing={2}>
                 {pokemon && pokemon.map((pokemon)=>(
                     <Grid xs={12} sm={6} md={4} xl={3} item key={pokemon.name}>
                         <Item>
@@ -40,7 +51,6 @@ const PokemonList = ({pokemon}) =>{
                                 {pokemon.name}
                             </Typography>
                             <Button
-                                fullWidth
                                 onClick={()=>handleNavigate(pokemon)}
                             >
                                 Link

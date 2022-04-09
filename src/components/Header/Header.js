@@ -19,6 +19,17 @@ const NavContainer = styled.div`
   margin: 0 2rem;
 `
 
+const StyledLink = styled(Link)`
+  &&{
+    cursor: pointer;
+    
+    color: ${({theme})=> theme.palette.primary[300]};
+    
+    text-decoration: none;
+    text-underline: none;
+  }
+`
+
 const navItems = [
     {title:"pokemon"}
 ]
@@ -34,9 +45,9 @@ const Header = () => {
             <NavContainer>
                 {
                     navItems.map(({title})=>(
-                        <Link>
+                        <StyledLink>
                             {title}
-                        </Link>
+                        </StyledLink>
                     ))
                 }
             </NavContainer>

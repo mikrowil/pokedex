@@ -27,9 +27,21 @@ const Item = styled.div`
 
 const features = [
     {
-        title:"Pokemon",
+        title:"Pokedex",
         path:"/pokemon"
-    }
+    },
+    {
+        title:"Search",
+        path:"/"
+    },
+    {
+        title:"Random pokemon",
+        path:"/"
+    },
+    {
+        title:"Berries",
+        path:"/"
+    },
 ]
 
 export default function Home() {

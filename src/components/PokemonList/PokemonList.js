@@ -12,23 +12,18 @@ const Container = styled.div`
 
 const Item = styled.div`
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  
   align-items: center;
-
   cursor: pointer;
 
   background-color: ${({theme}) => theme.palette.grey[100]};
+  border:1px solid ${({theme})=> theme.palette.grey[300]};
   border-radius: 10px;
 
-  padding: 2%;
+  padding: 4% 3%;
 
-  background: linear-gradient(to left, ${({theme}) => theme.palette.grey[100]} 50%, ${({theme}) => theme.palette.secondary.light} 50%) right;
-  background-size: 200%;
-  transition: .5s ease;
-
-  &:hover {
-    background-position: left;
-  }
+  box-shadow: 0 4px 0 ${({theme})=> theme.palette.grey[300]};
 `
 
 const PokemonList = ({pokemon}) =>{
@@ -44,17 +39,10 @@ const PokemonList = ({pokemon}) =>{
             <Grid container spacing={2}>
                 {pokemon && pokemon.map((pokemon)=>(
                     <Grid xs={12} sm={6} md={4} xl={3} item key={pokemon.name}>
-                        <Item>
-                            <Typography
-                                align={"center"}
-                            >
+                        <Item onClick={()=>handleNavigate(pokemon)}>
+                            <Typography>
                                 {pokemon.name}
                             </Typography>
-                            <Button
-                                onClick={()=>handleNavigate(pokemon)}
-                            >
-                                Link
-                            </Button>
                         </Item>
                     </Grid>
                 ))}

@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import {Link, Typography} from "@mui/material";
+import {useNavigate} from "react-router-dom";
 
 const Container = styled.div`
   display: flex;
@@ -35,12 +36,24 @@ const navItems = [
 ]
 
 const Header = () => {
+
+    const navigate = useNavigate()
+
     return (
         <Container>
 
-            <Typography variant={"h5"}>
-                Pokedex
-            </Typography>
+            <div
+                style={{cursor:"pointer"}}
+                onClick={()=>{
+                    navigate('/')
+                }}
+            >
+                <Typography
+                    variant={"h5"}
+                >
+                    Pokedex
+                </Typography>
+            </div>
 
             <NavContainer>
                 {

@@ -1,17 +1,21 @@
 import React from "react";
 import styled from "styled-components";
-import {Button as MuiButton} from "@mui/material";
+import {Button as MuiButton, LinearProgress} from "@mui/material";
 
 const StyledButton = styled(MuiButton)`
-  &&{
+  && {
     border-radius: 10px;
   }
 `;
 
-export default function Button({children, ...props}){
-    return(
+export default function Button({children, isLoading, ...props}) {
+
+    return (
         <StyledButton {...props}>
-            {children}
+            {
+                isLoading ? <LinearProgress variant={"indeterminate"}/> :
+                    children
+            }
         </StyledButton>
     )
 }

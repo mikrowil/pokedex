@@ -1,6 +1,7 @@
 import PokemonList from "../../components/PokemonList/PokemonList";
 import usePokemon from "../../hooks/usePokemon";
-import {Button, Typography} from "@mui/material";
+import {Typography} from "@mui/material";
+import Button from "../../components/ui-kit/Button";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -16,7 +17,7 @@ const Container = styled.div`
 `
 
 const ShowButton = styled(Button)`
-
+  margin: 1rem 0;
 `
 
 const MainContainer = () => {
@@ -32,9 +33,15 @@ const MainContainer = () => {
 
             <PokemonList pokemon={pokemon}/>
 
-            <ShowButton variant={"contained"} onClick={() => showMore()}>
-                show more
-            </ShowButton>
+            <div style={{marginTop:"1rem"}}>
+                <Button
+                    isLoading={isLoading}
+                    variant={"text"}
+                    onClick={() => showMore()}
+                >
+                    show more
+                </Button>
+            </div>
         </Container>
     )
 }

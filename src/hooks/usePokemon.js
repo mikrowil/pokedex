@@ -28,7 +28,7 @@ const usePokemon = (limit = 40) => {
     }
 
     useEffect(() => {
-        fetchPokemon()
+        showMore()
     }, [])
 
 

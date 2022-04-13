@@ -19,6 +19,7 @@ const Item = styled.div`
   
   border: 2px solid ${({theme})=>theme.palette.grey[500]};
   border-radius: 10px;
+  box-shadow: 5px 5px 4px ${({theme})=> theme.palette.grey[400]};
   
   cursor: pointer;
   

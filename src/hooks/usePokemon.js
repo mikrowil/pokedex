@@ -1,38 +1,33 @@
-import {useEffect, useState} from "react";
+import { useState } from "react";
 import pokeapi from "../api/pokeapi";
 
 const usePokemon = (limit = 40) => {
-    const [pokemon, setPokemon] = useState([])
-    const [next, setNext] = useState({offset: 0, limit: limit})
+  const fetchPokemon = async () => {
+    setIsLoading(true);
 
-    const [isLoading, setIsLoading] = useState(false)
+    const response = await pokeapi.get("/pokemon", {
+      params: next,
+    });
 
-    const fetchPokemon = async () => {
-        setIsLoading(true)
+    setNext({
+      offset: next.offset + next.limit,
+      limit: next.limit,
+    });
+    setPokemon([...pokemon, ...response.data.results]);
 
-        const response = await pokeapi.get('/pokemon', {
-            params: next
-        })
+    setIsLoading(false);
+  };
 
-        setNext({
-            offset: next.offset + next.limit,
-            limit: next.limit
-        })
-        setPokemon([...pokemon, ...response.data.results])
+  const [pokemon, setPokemon] = useState(fetchPokemon());
+  const [next, setNext] = useState({ offset: 0, limit: limit });
 
-        setIsLoading(false)
-    }
+  const [isLoading, setIsLoading] = useState(false);
 
-    const showMore = () => {
-        fetchPokemon()
-    }
+  const showMore = () => {
+    fetchPokemon().then();
+  };
 
-    useEffect(() => {
-        showMore()
-    }, [])
+  return { pokemon, showMore, isLoading };
+};
 
-
-    return {pokemon, showMore, isLoading}
-}
-
-export default usePokemon
+export default usePokemon;

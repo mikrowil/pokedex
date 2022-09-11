@@ -1,78 +1,56 @@
 import "./App.css";
 import Header from "./components/Header/Header";
-import { createTheme, ThemeProvider, responsiveFontSizes } from "@mui/material";
-import styled, { ThemeProvider as TP } from "styled-components";
+import { ThemeProvider } from "@mui/material";
 import Navigator from "./components/Navigator";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { darkTheme, lightTheme } from "./theme/theme";
+import styled from "@emotion/styled";
+import { css } from "@emotion/react";
 
-const StyledBackground = styled.div`
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  height: 100%;
-  min-height: 100vh;
-  background-size: cover;
-  transition: background-color 1000ms ease-in-out;
-`;
+const StyledBackground = styled.div(
+  ({ theme }) => css`
+    display: flex;
+    flex: 1;
+    background-color: ${theme.palette.background.default};
+    flex-direction: column;
+    min-height: 100vh;
+    background-size: cover;
+    transition: background-color 1000ms ease-in-out;
+  `
+);
 
-const theme = createTheme({
-  palette: {
-    mode: "light",
-  },
-  bg: {
-    main: "#DCE1E9",
-    light: "#e9eff5",
-  },
-  typography: {
-    allVariants: {
-      fontFamily: "'Poppins', sans-serif",
-    },
-    h4: {
-      color: "#363732",
-    },
-    h5: {
-      color: "#363732",
-    },
-  },
-});
-
-const darkTheme = createTheme({
-  palette: {
-    mode: "dark",
-  },
-  bg: {
-    main: "#363732",
-    light: "#56564f",
-  },
-  typography: {
-    allVariants: {
-      fontFamily: "'Poppins', sans-serif",
-    },
-    h4: {
-      color: "#DCE1E9",
-    },
-    h5: {
-      color: "#DCE1E9",
-    },
-  },
-});
+const getTheme = (mode) => {
+  switch (mode) {
+    case "light":
+      return lightTheme;
+    case "dark":
+      return darkTheme;
+    default:
+      return lightTheme;
+  }
+};
 
 function App() {
-  const [mode, setMode] = useState("dark");
-
-  const responsiveTheme = responsiveFontSizes(
-    mode === "light" ? theme : darkTheme
+  const [mode, setMode] = useState(
+    window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light"
   );
 
+  const [theme, setTheme] = useState(getTheme(mode));
+
+  useEffect(() => {
+    setTheme(getTheme(mode));
+  }, [mode]);
+
   return (
-    <TP theme={responsiveTheme}>
-      <ThemeProvider theme={responsiveTheme}>
-        <StyledBackground style={{ backgroundColor: responsiveTheme.bg.main }}>
-          <Header mode={mode} setMode={setMode} />
-          <Navigator />
-        </StyledBackground>
-      </ThemeProvider>
-    </TP>
+    <ThemeProvider theme={theme}>
+      <StyledBackground>
+        <Header mode={mode} setMode={setMode} />
+        <Navigator />
+      </StyledBackground>
+    </ThemeProvider>
   );
 }
 

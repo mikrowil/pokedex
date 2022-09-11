@@ -1,7 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import pokeapi from "../api/pokeapi";
 
 const usePokemon = (limit = 40) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [pokemon, setPokemon] = useState([]);
+  const [next, setNext] = useState({ offset: 0, limit: limit });
+
   const fetchPokemon = async () => {
     setIsLoading(true);
 
@@ -18,14 +22,14 @@ const usePokemon = (limit = 40) => {
     setIsLoading(false);
   };
 
-  const [pokemon, setPokemon] = useState(fetchPokemon());
-  const [next, setNext] = useState({ offset: 0, limit: limit });
-
-  const [isLoading, setIsLoading] = useState(false);
-
   const showMore = () => {
     fetchPokemon().then();
   };
+
+  useEffect(() => {
+    fetchPokemon();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return { pokemon, showMore, isLoading };
 };

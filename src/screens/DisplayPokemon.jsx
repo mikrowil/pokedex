@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { CircularProgress, Grid, Typography } from "@mui/material";
 import usePokemonDetails from "../hooks/usePokemonDetails";
-import styled from "styled-components";
+import styled from "@emotion/styled";
 import { useNavigate } from "react-router-dom";
 import Button from "../components/ui-kit/Button";
 import Icon from "../components/ui-kit/Icon";
@@ -25,10 +25,10 @@ const Section = styled.div`
   flex-direction: column;
   margin: auto;
   align-items: center;
-  border: 2px solid ${({ theme }) => theme.palette.grey[500]};
-  background-color: ${({ theme }) => theme.bg.main};
+  background-color: ${({ theme }) => theme.palette.background.paper};
   border-radius: 10px;
   text-align: center;
+  transition: background-color 300ms ease-in-out;
 `;
 
 const ShinyToggle = styled(Icon)`
@@ -102,7 +102,9 @@ export default function DisplayPokemon() {
                 <Section>
                   {openMoves ? (
                     pokemon.moves.map((move) => (
-                      <Typography>{move.move.name}</Typography>
+                      <Typography key={move.move.name}>
+                        {move.move.name}
+                      </Typography>
                     ))
                   ) : (
                     <Typography>Moves</Typography>

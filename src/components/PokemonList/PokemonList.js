@@ -1,6 +1,6 @@
 import React from "react";
 import { Grid, Typography } from "@mui/material";
-import styled from "styled-components";
+import styled from "@emotion/styled";
 import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
@@ -17,13 +17,13 @@ const Item = styled.div`
   align-items: center;
   cursor: pointer;
 
-  background-color: ${({ theme }) => theme.palette.grey[100]};
+  background-color: ${({ theme }) => theme.palette.background.paper};
   border: 1px solid ${({ theme }) => theme.palette.grey[300]};
   border-radius: 10px;
 
   padding: 4% 3%;
 
-  box-shadow: 0 4px 0 ${({ theme }) => theme.palette.grey[300]};
+  box-shadow: 3px 4px 3px ${({ theme }) => theme.palette.boxShadow};
 `;
 
 const PokemonList = ({ pokemon }) => {

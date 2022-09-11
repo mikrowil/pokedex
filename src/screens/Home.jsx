@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import styled from "@emotion/styled";
 import { Grid } from "@mui/material";
 import Typography from "../components/ui-kit/Typography";
 import { useNavigate } from "react-router-dom";
@@ -19,8 +19,7 @@ const Container = styled.div`
 
 const Item = styled.div`
   padding: 2%;
-  background-color: ${({ theme }) => theme.bg.light};
-  border: 2px solid ${({ theme }) => theme.palette.grey[500]};
+  background-color: ${({ theme }) => theme.palette.background.paper};
   border-radius: 10px;
   cursor: pointer;
   text-align: center;
@@ -61,8 +60,8 @@ export default function Home() {
       <PokemonImage src={imgPokemon} />
       <InnerContainer>
         <Grid container spacing={4}>
-          {features.map((feature) => (
-            <Grid item xs={12} md={6}>
+          {features.map((feature, index) => (
+            <Grid key={index} item xs={12} md={6}>
               <Item
                 onClick={() => {
                   navigate(feature.path);

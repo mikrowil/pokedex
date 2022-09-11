@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { Icon, Link, useTheme } from "@mui/material";
+import styled from "@emotion/styled";
+import { Icon } from "@mui/material";
 import Typography from "../ui-kit/Typography";
 import { useNavigate } from "react-router-dom";
 
@@ -7,49 +7,13 @@ const Container = styled.div`
   display: flex;
   padding: 1rem 0;
   height: 5vh;
-  width: 100vw;
+  width: 100%;
   align-items: center;
   justify-content: center;
 `;
 
 const StyledIcon = styled(Icon)`
   transition: color 300ms ease-in-out;
-`;
-
-const NavContainer = styled.div`
-  display: flex;
-  flex: 1;
-  align-items: center;
-  margin: 0 2rem;
-`;
-
-const StyledLink = styled(Link)`
-  position: relative;
-
-  && {
-    cursor: pointer;
-    color: ${({ theme }) => theme.palette.primary[300]};
-    text-decoration: none;
-    text-underline: none;
-  }
-
-  &::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    height: 2px;
-    background-color: currentColor;
-    transform: scaleX(0);
-    transform-origin: right;
-    transition: transform 200ms ease-in;
-  }
-
-  &:hover::after {
-    transform: scaleX(1);
-    transform-origin: left;
-  }
 `;
 
 const AvatarContainer = styled.div`
@@ -64,11 +28,8 @@ const AvatarContainer = styled.div`
   cursor: pointer;
 `;
 
-const navItems = [{ title: "pokemon" }];
-
 const Header = ({ mode, setMode }) => {
   const navigate = useNavigate();
-  const theme = useTheme();
 
   return (
     <Container>
@@ -78,6 +39,7 @@ const Header = ({ mode, setMode }) => {
           display: "flex",
           flex: 1,
           alignItems: "center",
+          justifyContent: "space-between",
         }}
       >
         <div
@@ -88,20 +50,12 @@ const Header = ({ mode, setMode }) => {
         >
           <Typography variant={"h4"}>Pokedex</Typography>
         </div>
-        <NavContainer>
-          {navItems.map(({ title }) => (
-            <StyledLink>{title}</StyledLink>
-          ))}
-        </NavContainer>
         <AvatarContainer
           onClick={() => {
             setMode(mode === "light" ? "dark" : "light");
           }}
         >
-          <StyledIcon
-            style={{ color: theme.typography.h4.color }}
-            fontSize={"large"}
-          >
+          <StyledIcon fontSize={"large"}>
             {mode === "light" ? "dark_mode" : "light_mode"}
           </StyledIcon>
         </AvatarContainer>

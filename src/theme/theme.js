@@ -44,6 +44,7 @@ const darkThemeSettings = createTheme({
       800: "#bc2a3b",
       900: "#ac2130",
     },
+    btnHover: "#3E336D",
     text: {
       primary: "#fff",
       secondary: "rgba(255, 255, 255, 0.7)",
@@ -66,7 +67,7 @@ const lightThemeSettings = createTheme({
   palette: {
     mode: "light",
     primary: {
-      main: "#473d8c",
+      main: "#3e3783",
       light: "#7B6EAF",
       dark: "#3E336D",
       contrastText: "fff",
@@ -97,14 +98,15 @@ const lightThemeSettings = createTheme({
       800: "#bc2a3b",
       900: "#ac2130",
     },
+    btnHover: "#ccc7e1",
     text: {
       primary: "rgba(0, 0, 0, 0.87)",
       secondary: "rgba(0, 0, 0, 0.54)",
       disabled: "rgba(0, 0, 0, 0.38)",
     },
     background: {
-      default: "#fafafa",
-      paper: "#fff",
+      default: "#ffffff",
+      paper: "#eeeeee",
     },
     divider: "rgba(0, 0, 0, 0.12)",
   },

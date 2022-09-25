@@ -15,7 +15,7 @@ const StyledBackground = styled.div(
     flex-direction: column;
     min-height: 100vh;
     background-size: cover;
-    transition: background-color 1000ms ease-in-out;
+    transition: background-color 700ms ease-in-out;
   `
 );
 

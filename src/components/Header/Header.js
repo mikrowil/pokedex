@@ -21,7 +21,7 @@ const AvatarContainer = styled.div`
   border-radius: 50%;
   display: flex;
   height: 50px;
-  justify-content: center;
+  justify-content: flex-end;
   position: relative;
   width: 50px;
 
@@ -40,6 +40,9 @@ const Header = ({ mode, setMode }) => {
           flex: 1,
           alignItems: "center",
           justifyContent: "space-between",
+          width: "100%",
+          paddingLeft: "16px",
+          paddingRight: "16px",
         }}
       >
         <div

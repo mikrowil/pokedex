@@ -1,8 +1,7 @@
 import PokemonList from "../../components/PokemonList/PokemonList";
-import usePokemon from "../../hooks/usePokemon";
-import { Typography } from "@mui/material";
-import Button from "../../components/ui-kit/Button";
-import styled from "styled-components";
+import styled from "@emotion/styled";
+import { useState } from "react";
+import { useLocation } from "react-router-dom";
 
 const Container = styled.div`
   display: flex;
@@ -14,23 +13,14 @@ const Container = styled.div`
 `;
 
 const MainContainer = () => {
-  const { pokemon, showMore, isLoading } = usePokemon();
+  const location = useLocation();
+  const [initialPage] = useState(
+    location.state && location.state.page ? location.state.page : 0
+  );
 
   return (
     <Container>
-      <Typography variant={"h3"}>Pokemon</Typography>
-
-      <PokemonList pokemon={pokemon} />
-
-      <div style={{ marginTop: "1rem" }}>
-        <Button
-          isLoading={isLoading}
-          variant={"text"}
-          onClick={() => showMore()}
-        >
-          show more
-        </Button>
-      </div>
+      <PokemonList initialPage={initialPage} prevPath={location.pathname} />
     </Container>
   );
 };

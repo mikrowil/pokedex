@@ -18,12 +18,18 @@ const Container = styled.div`
 `;
 
 const Item = styled.div`
-  padding: 2%;
-  background-color: ${({ theme }) => theme.palette.background.paper};
-  border-radius: 10px;
+  display: flex;
   cursor: pointer;
-  text-align: center;
-  transition: background-color 300ms ease-in-out;
+  align-items: center;
+  border: ${({ theme }) => `1px solid ${theme.palette.primary.main}`};
+  background-color: ${({ theme }) => theme.palette.background.paper};
+  padding: 1rem;
+  border-radius: 5px;
+  transition: background-color 100ms ease-in-out;
+
+  :hover {
+    background-color: ${({ theme }) => theme.palette.btnHover};
+  }
 `;
 
 const PokemonImage = styled.img`

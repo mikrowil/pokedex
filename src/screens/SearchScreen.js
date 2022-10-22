@@ -27,7 +27,6 @@ export default function SearchScreen() {
       } catch (e) {
         console.log(e.message);
       }
-      console.log(result);
     };
     fetch();
   }, [inputValue]);

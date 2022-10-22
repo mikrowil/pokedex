@@ -23,7 +23,7 @@ import {
 } from "../../theme/typeColors";
 
 const Card = styled(Box)(
-  ({ theme, firstcolor, secondcolor }) => css`
+  ({ theme, firstcolor, secondcolor, ...props }) => css`
     min-height: 15rem;
     max-width: 13rem;
     width: 100%;
@@ -38,6 +38,7 @@ const Card = styled(Box)(
 
     :hover {
       min-height: 14rem;
+      cursor: ${props.clickable};
     }
   `
 );
@@ -113,11 +114,14 @@ export default function PokemonCard({
   img,
   firstType,
   secondType,
+  onClick,
   ...props
 }) {
   return (
     <Card
       {...props}
+      clickable={Boolean(onClick) ? "pointer" : "unset"}
+      onClick={onClick}
       firstcolor={getColor(firstType)}
       secondcolor={getColor(secondType)}
     >

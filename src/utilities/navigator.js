@@ -2,6 +2,7 @@ import MainContainer from "../screens/MainContainer/MainContainer";
 import DisplayPokemon from "../screens/DisplayPokemon";
 import Home from "../screens/Home";
 import SearchScreen from "../screens/SearchScreen";
+import WhoGameScreen from "../screens/WhoGameScreen";
 
 const navigator = [
   {
@@ -17,6 +18,12 @@ const navigator = [
     component: MainContainer,
   },
   {
+    pathName: "/who",
+    title: "who",
+    exact: true,
+    component: WhoGameScreen,
+  },
+  {
     pathName: "/pokemon/:name",
     title: "display",
     exact: true,
@@ -30,4 +37,4 @@ const navigator = [
   },
 ];
 
-export default navigator
+export default navigator;

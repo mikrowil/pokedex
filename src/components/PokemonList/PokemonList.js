@@ -1,38 +1,83 @@
-import React, { useEffect, useState } from "react";
-import { Grid, Pagination } from "@mui/material";
+import React, { useContext, useEffect, useState } from "react";
+import { Autocomplete, Box, Grid, Pagination, TextField } from "@mui/material";
 import styled from "@emotion/styled";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import PokemonCard from "../ui-kit/PokemonCard";
-import pokedex from "../../assets/pokedex.json";
+import { cleanPokemonName } from "../../utilities/stringModifiers";
+import useSearch from "../../hooks/useSearch";
+import { LanguageContext } from "../../contex/LanguageContext";
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1;
-  margin: 0 auto;
 `;
 
-const PokemonList = ({ prevPath, initialPage }) => {
+const PokemonList = () => {
   const navigate = useNavigate();
-
-  const [page, setPage] = useState(initialPage | 1);
+  const { language } = useContext(LanguageContext);
+  const [searchParams] = useSearchParams();
+  const [page, setPage] = useState(Number(searchParams.get("page")));
+  const [value, setValue] = useState(null);
+  const { inputValue, setInputValue, result } = useSearch();
   const [pokemon, setPokemon] = useState([]);
+  const [fullPokemon, setFullPokemon] = useState([]);
 
   const handleNavigate = (pokemon) => {
-    navigate(`/pokemon/${pokemon.name.english.toLowerCase()}`, {
-      state: { pokemon, prevPath, page },
-    });
+    navigate(
+      `/pokemon/${cleanPokemonName(pokemon.name.english.toLowerCase())}`,
+      {
+        state: { pokemon, prevPath: `/pokemon?page=${page}` },
+      }
+    );
+  };
+
+  const paginationOnChange = (value) => {
+    navigate(`/pokemon?page=${value}`);
+  };
+
+  const applySearchFilter = (value) => {
+    setValue(value);
+    paginationOnChange(1);
   };
 
   useEffect(() => {
-    const newPokemon = pokedex.slice((page - 1) * 24, page * 24);
-
+    let newPokemon = result;
+    setFullPokemon(newPokemon);
+    newPokemon = newPokemon.slice((page - 1) * 24, page * 24);
     setPokemon(newPokemon);
-  }, [page]);
+  }, [page, result]);
+
+  useEffect(() => {
+    setPage(Number(searchParams.get("page")));
+  }, [searchParams]);
 
   return (
     <Container>
-      <Grid container spacing={2}>
+      <Grid container spacing={2} style={{ display: "flex" }}>
+        <Grid item xs={12}>
+          <Box>
+            <Autocomplete
+              value={value}
+              freeSolo
+              onChange={(event, newValue) => {
+                applySearchFilter(newValue);
+              }}
+              inputValue={inputValue}
+              onInputChange={(event, newInputValue) => {
+                setInputValue(newInputValue);
+                paginationOnChange(1);
+              }}
+              style={{ maxWidth: 400 }}
+              renderInput={(params) => <TextField {...params} />}
+              options={fullPokemon}
+              getOptionLabel={(option) => {
+                if (!option.name) return "";
+                return option.name[language];
+              }}
+            />
+          </Box>
+        </Grid>
         {pokemon &&
           pokemon.map((pokemon) => (
             <Grid
@@ -51,7 +96,7 @@ const PokemonList = ({ prevPath, initialPage }) => {
               {pokemon && (
                 <PokemonCard
                   style={{ padding: "1rem" }}
-                  name={pokemon.name.english}
+                  name={pokemon.name[language]}
                   img={pokemon.image ? pokemon.image.thumbnail : ""}
                   firstType={
                     pokemon.type && pokemon.type[0] ? pokemon.type[0] : null
@@ -66,12 +111,18 @@ const PokemonList = ({ prevPath, initialPage }) => {
           ))}
       </Grid>
       <Pagination
-        sx={{ marginTop: 2 }}
+        sx={{
+          marginTop: 2,
+          marginBottom: 4,
+          justifyContent: "center",
+          display: "flex",
+        }}
         page={page}
         size={"large"}
-        count={Math.ceil(pokedex.length / 24)}
+        boundaryCount={5}
+        count={Math.ceil(fullPokemon.length / 24)}
         onChange={(e, value) => {
-          setPage(value);
+          paginationOnChange(value);
         }}
       />
     </Container>

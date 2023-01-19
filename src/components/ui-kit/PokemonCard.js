@@ -1,26 +1,7 @@
 import { Box, css } from "@mui/material";
 import styled from "@emotion/styled";
 import Typography from "@mui/material/Typography";
-import {
-  BUG,
-  DARK,
-  DRAGON,
-  ELECTRIC,
-  FAIRY,
-  FIGHTING,
-  FIRE,
-  FLYING,
-  GHOST,
-  GRASS,
-  GROUND,
-  ICE,
-  NORMAL,
-  POISON,
-  PSYCHIC,
-  ROCK,
-  STEEL,
-  WATER,
-} from "../../theme/typeColors";
+import { getColor } from "../../utilities/colors";
 
 const Card = styled(Box)(
   ({ theme, firstcolor, secondcolor, ...props }) => css`
@@ -31,10 +12,10 @@ const Card = styled(Box)(
     background: rgb(190, 247, 255);
     background: linear-gradient(
       158deg,
-      ${firstcolor ? firstcolor : theme.palette.background.paper} 0%,
-      ${secondcolor ? secondcolor : theme.palette.background.paper}
+      ${firstcolor ? firstcolor : "#424242"} 0%,
+      ${secondcolor ? secondcolor : "#424242"}
     );
-    transition: min-height 200ms ease-in-out;
+    transition: min-height 70ms ease-in-out;
 
     :hover {
       min-height: 14rem;
@@ -54,60 +35,8 @@ const ImageContainer = styled.div(
 );
 
 const StyledTypography = styled(Typography)(
-  () => css`
-    &&.MuiTypography-root {
-      text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
-        1px 1px 0 #000;
-      color: #fff;
-    }
-  `
+  ({ theme }) => theme.typography.outlined
 );
-
-const getColor = (type) => {
-  if (!type) return null;
-  const lower = type.toLowerCase();
-
-  switch (lower) {
-    case "bug":
-      return BUG;
-    case "dark":
-      return DARK;
-    case "dragon":
-      return DRAGON;
-    case "electric":
-      return ELECTRIC;
-    case "fairy":
-      return FAIRY;
-    case "fighting":
-      return FIGHTING;
-    case "fire":
-      return FIRE;
-    case "flying":
-      return FLYING;
-    case "ghost":
-      return GHOST;
-    case "grass":
-      return GRASS;
-    case "ground":
-      return GROUND;
-    case "ice":
-      return ICE;
-    case "normal":
-      return NORMAL;
-    case "poison":
-      return POISON;
-    case "psychic":
-      return PSYCHIC;
-    case "rock":
-      return ROCK;
-    case "steel":
-      return STEEL;
-    case "water":
-      return WATER;
-    default:
-      return null;
-  }
-};
 
 export default function PokemonCard({
   name,

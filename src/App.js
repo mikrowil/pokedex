@@ -4,20 +4,8 @@ import { ThemeProvider } from "@mui/material";
 import Navigator from "./components/Navigator";
 import { useEffect, useState } from "react";
 import { darkTheme, lightTheme } from "./theme/theme";
-import styled from "@emotion/styled";
-import { css } from "@emotion/react";
-
-const StyledBackground = styled.div(
-  ({ theme }) => css`
-    display: flex;
-    flex: 1;
-    background-color: ${theme.palette.background.default};
-    flex-direction: column;
-    min-height: 100vh;
-    background-size: cover;
-    transition: background-color 700ms ease-in-out;
-  `
-);
+import StyledBackground from "./layout/StyledBackground/StyledBackground";
+import { LanguageContextProvider } from "./contex/LanguageContext";
 
 const getTheme = (mode) => {
   switch (mode) {
@@ -46,10 +34,12 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <StyledBackground>
-        <Header mode={mode} setMode={setMode} />
-        <Navigator />
-      </StyledBackground>
+      <LanguageContextProvider>
+        <StyledBackground>
+          <Header mode={mode} setMode={setMode} />
+          <Navigator />
+        </StyledBackground>
+      </LanguageContextProvider>
     </ThemeProvider>
   );
 }

@@ -6,16 +6,19 @@ import styled from "@emotion/styled";
 import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
 import Icon from "../components/ui-kit/Icon";
-import { convertDeciToMeter, convertHectoToKilo } from "../helpers/utils";
+import { convertDeciToMeter, convertHectoToKilo } from "../utilities/utils";
+import { css } from "@emotion/react";
+import { getColor } from "../utilities/colors";
+import { cleanPokemonName } from "../utilities/stringModifiers";
 
 const Container = styled.div`
-  padding: 1rem 0;
+  max-width: 1280px;
+  margin: 0 auto;
+  width: 100%;
 `;
 
 const InnerContainer = styled.div`
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 0 1rem;
+  width: 100%;
 `;
 
 const Item = styled.div`
@@ -26,10 +29,13 @@ const Item = styled.div`
   border-radius: 5px;
 `;
 
-const PokemonName = styled(Typography)`
-  font-family: "Kanit", sans-serif;
-  text-transform: uppercase;
-`;
+const PokemonName = styled(Typography)(({ theme }) => {
+  return {
+    ...theme.typography.outlined,
+    fontFamily: "Kanit",
+    textTransform: "uppercase",
+  };
+});
 
 const Section = styled.div`
   display: flex;
@@ -42,13 +48,23 @@ const Section = styled.div`
   border: ${({ theme }) => `1px solid ${theme.palette.primary.main}`};
 `;
 
+const Background = styled(Section)(
+  ({ firstcolor, secondcolor }) => css`
+    background: linear-gradient(
+      158deg,
+      ${firstcolor ? firstcolor : "#424242"} 0%,
+      ${secondcolor ? secondcolor : "#424242"}
+    );
+  `
+);
+
 export default function DisplayPokemon() {
   const navigate = useNavigate();
   const { state } = useLocation();
   const [isShiny, setIsShiny] = useState(false);
 
   const { pokemon, isLoading } = usePokemonDetails(
-    state.pokemon.name.english.toLowerCase()
+    cleanPokemonName(state.pokemon.name.english.toLowerCase())
   );
 
   const status = [
@@ -85,85 +101,142 @@ export default function DisplayPokemon() {
       icon: "health_and_safety",
     },
   ];
-
-  console.log(state);
-
   return (
     <Container>
       <InnerContainer>
-        <Grid container spacing={2} alignItems={"stretch"}>
-          <Grid item xs={12}>
-            <Button
-              variant={"outlined"}
-              onClick={() => {
-                navigate(state.prevPath, {
-                  state: { page: state.page ? state.page : 1 },
-                });
-              }}
-              startIcon={<Icon>arrow_back</Icon>}
-            >
-              go back
-            </Button>
-          </Grid>
-          {!isLoading ? (
-            <>
-              <Grid item xs={12} md={3} display={"flex"}>
-                <Section>
-                  <Icon
-                    style={{ alignSelf: "flex-end" }}
-                    onClick={() => setIsShiny(!isShiny)}
-                    name={"star"}
-                    fill={isShiny ? 1 : 0}
-                    size={32}
-                  />
-                  <Box
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                    }}
+        <Box p={1}>
+          <Grid container spacing={2} alignItems={"stretch"}>
+            <Grid item xs={12}>
+              <Button
+                variant={"outlined"}
+                onClick={() => {
+                  navigate(state.prevPath, {
+                    state: { page: state.page ? state.page : 1 },
+                  });
+                }}
+                startIcon={<Icon>arrow_back</Icon>}
+              >
+                go back
+              </Button>
+            </Grid>
+            {!isLoading ? (
+              <>
+                <Grid item xs={12} md={3} display={"flex"}>
+                  <Background
+                    firstcolor={getColor(
+                      pokemon.types[0] ? pokemon.types[0].type.name : null
+                    )}
+                    secondcolor={getColor(
+                      pokemon.types[1] ? pokemon.types[1].type.name : null
+                    )}
                   >
-                    <img
-                      src={
-                        pokemon.sprites[
-                          isShiny ? "front_shiny" : "front_default"
-                        ]
-                      }
-                      width={200}
-                      height={200}
-                      alt={"Pokemon"}
+                    <Icon
+                      style={{ alignSelf: "flex-end" }}
+                      onClick={() => setIsShiny(!isShiny)}
+                      name={"temp_preferences_custom"}
+                      fill={isShiny ? 1 : 0}
+                      size={32}
+                      color={"#f6cb1a"}
                     />
-                    <PokemonName
-                      variant={pokemon.name.length > 8 ? "h4" : "h3"}
+                    <Box
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                      }}
                     >
-                      {pokemon.name}
-                    </PokemonName>
-                  </Box>
-                </Section>
-              </Grid>
-              <Grid item xs={12} md={9}>
-                <Grid container spacing={2} style={{ display: "flex" }}>
-                  {status.map((status) => (
-                    <Grid item xs={12} sm={6} key={status.icon}>
-                      <div>
-                        <PropertyItem icon={status.icon} label={status.label} />
-                      </div>
-                    </Grid>
-                  ))}
+                      <img
+                        src={
+                          pokemon.sprites[
+                            isShiny ? "front_shiny" : "front_default"
+                          ]
+                        }
+                        width={200}
+                        height={200}
+                        alt={"Pokemon"}
+                      />
+                      <PokemonName
+                        variant={pokemon.name.length > 8 ? "h4" : "h3"}
+                      >
+                        {pokemon.name}
+                      </PokemonName>
+                    </Box>
+                  </Background>
                 </Grid>
-              </Grid>
+                <Grid item xs={12} md={9}>
+                  <Grid container spacing={2} style={{ display: "flex" }}>
+                    {status.map((status) => (
+                      <Grid item xs={12} sm={6} key={status.icon}>
+                        <div>
+                          <PropertyItem
+                            icon={status.icon}
+                            label={status.label}
+                          />
+                        </div>
+                      </Grid>
+                    ))}
+                  </Grid>
+                </Grid>
+                <Grid item xs={12}>
+                  <Section>
+                    <Typography variant={"h6"}>
+                      {state.pokemon.description}
+                    </Typography>
+                  </Section>
+                </Grid>
+                <Grid item xs={12}>
+                  <Section>
+                    {pokemon.abilities.map((ability: Object) => (
+                      <Box
+                        display={"flex"}
+                        alignItems={"center"}
+                        key={ability.ability.name}
+                      >
+                        <Typography variant={"h5"} textTransform={"capitalize"}>
+                          {ability.ability.name}
+                        </Typography>
+                        {ability.is_hidden && (
+                          <Typography
+                            color={"rgba(255,255,255,0.63)"}
+                            ml={1}
+                            variant={"caption"}
+                          >
+                            (hidden)
+                          </Typography>
+                        )}
+                      </Box>
+                    ))}
+                  </Section>
+                </Grid>
+                <Grid item xs={12}>
+                  <Section>
+                    {pokemon.moves
+                      .filter((move) =>
+                        move.version_group_details.find(
+                          (x) => x.move_learn_method.name === "level-up"
+                        )
+                      )
+                      .map((move: Object) => (
+                        <Box
+                          key={move.move.name}
+                          display={"flex"}
+                          alignItems={"center"}
+                        >
+                          <Typography>{move.move.name}</Typography>
+                        </Box>
+                      ))}
+                  </Section>
+                </Grid>
+              </>
+            ) : (
               <Grid item xs={12}>
-                <Section>
-                  <Typography variant={"h6"}>
-                    {state.pokemon.description}
-                  </Typography>
-                </Section>
+                <CircularProgress />
               </Grid>
-            </>
-          ) : (
-            <CircularProgress />
-          )}
-        </Grid>
+            )}
+          </Grid>
+        </Box>
       </InnerContainer>
     </Container>
   );

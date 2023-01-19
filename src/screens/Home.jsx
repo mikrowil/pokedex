@@ -1,16 +1,17 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { Grid } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import Typography from "../components/ui-kit/Typography";
 import { useNavigate } from "react-router-dom";
-import imgPokemon from "../assets/g.png";
+import imgPokemonDark from "../assets/g.png";
 
 const InnerContainer = styled.div`
   position: relative;
   display: flex;
   max-width: 1280px;
   margin: 1rem auto;
-  padding: 4rem 1rem;
+  padding: 4rem 0;
+  width: 100%;
 `;
 
 const Container = styled.div`
@@ -32,53 +33,56 @@ const Item = styled.div`
   }
 `;
 
-const PokemonImage = styled.img`
+const PokemonImageDark = styled.img`
   position: absolute;
   width: 800px;
   height: 800px;
   perspective: 2px;
+  opacity: ${({ theme }) => (theme.palette.mode === "light" ? 0 : 1)};
+  transition: opacity 600ms ease-out;
 `;
 
 const features = [
   {
     title: "Pokedex",
-    path: "/pokemon",
+    path: "/pokemon?page=1",
   },
   {
-    title: "Search",
-    path: "/search",
-  },
-  {
-    title: "Random pokemon",
-    path: "/",
-  },
-  {
-    title: "Berries",
-    path: "/",
+    title: "Who's that?",
+    path: "/who",
   },
 ];
 
 export default function Home() {
-  const navigate = useNavigate();
-
   return (
     <Container>
-      <PokemonImage src={imgPokemon} />
+      <PokemonImageDark src={imgPokemonDark} />
       <InnerContainer>
-        <Grid container spacing={4}>
-          {features.map((feature, index) => (
-            <Grid key={index} item xs={12} md={6}>
-              <Item
-                onClick={() => {
-                  navigate(feature.path);
-                }}
-              >
-                <Typography variant={"h5"}>{feature.title}</Typography>
-              </Item>
-            </Grid>
-          ))}
-        </Grid>
+        <Box p={1} display={"flex"} style={{ width: "100%" }}>
+          <Grid container spacing={4}>
+            <Paths />
+          </Grid>
+        </Box>
       </InnerContainer>
     </Container>
   );
 }
+
+const Paths = () => {
+  const navigate = useNavigate();
+  return (
+    <>
+      {features.map((feature, index) => (
+        <Grid key={index} item xs={12} md={6}>
+          <Item
+            onClick={() => {
+              navigate(feature.path);
+            }}
+          >
+            <Typography variant={"h5"}>{feature.title}</Typography>
+          </Item>
+        </Grid>
+      ))}
+    </>
+  );
+};

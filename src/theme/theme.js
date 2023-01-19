@@ -6,6 +6,12 @@ const baseThemeSettings = createTheme({
     allVariants: {
       fontFamily: "'Poppins', sans-serif",
     },
+    outlined: {
+      color: "#fff",
+      letterSpacing: "1.5px",
+      textShadow:
+        "-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000",
+    },
   },
 });
 
@@ -24,9 +30,9 @@ const darkThemeSettings = createTheme({
       400: "#7263aa",
       500: "#5a4a9c",
       600: "#534596",
-      700: "#473d8c",
-      800: "#3e3783",
-      900: "#302c70",
+      700: "#342c6e",
+      800: "#1d1849",
+      900: "#110628",
     },
     secondary: {
       main: "#c93042",
@@ -78,9 +84,9 @@ const lightThemeSettings = createTheme({
       400: "#7263aa",
       500: "#5a4a9c",
       600: "#534596",
-      700: "#473d8c",
-      800: "#3e3783",
-      900: "#302c70",
+      700: "#342c6e",
+      800: "#1d1849",
+      900: "#110628",
     },
     secondary: {
       main: "#c93042",
@@ -106,7 +112,7 @@ const lightThemeSettings = createTheme({
     },
     background: {
       default: "#ffffff",
-      paper: "#eeeeee",
+      paper: "#f6f6f6",
     },
     divider: "rgba(0, 0, 0, 0.12)",
   },

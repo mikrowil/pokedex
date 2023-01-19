@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import navigator from "../helpers/navigator";
+import navigator from "../utilities/navigator";
 
 export default function Navigator() {
   return (

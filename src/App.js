@@ -1,11 +1,16 @@
 import "./App.css";
 import Header from "./components/Header/Header";
-import { ThemeProvider } from "@mui/material";
+import {
+  Experimental_CssVarsProvider as CssVarProvider,
+  ThemeProvider,
+} from "@mui/material";
 import Navigator from "./components/Navigator";
-import { useEffect, useState } from "react";
-import { darkTheme, lightTheme } from "./theme/theme";
+import { useContext, useEffect, useState } from "react";
+import { darkTheme, extendedDarkTheme, lightTheme } from "./theme/theme";
 import StyledBackground from "./layout/StyledBackground/StyledBackground";
 import { LanguageContextProvider } from "./contex/LanguageContext";
+import { ColorModeContext, ColorModeProvider } from "./contex/ColorModeContext";
+import "./assets/styles/variables.scss";
 
 const getTheme = (mode) => {
   switch (mode) {
@@ -19,13 +24,7 @@ const getTheme = (mode) => {
 };
 
 function App() {
-  const [mode, setMode] = useState(
-    window.matchMedia &&
-      window.matchMedia("(prefers-color-scheme: dark)").matches
-      ? "dark"
-      : "light"
-  );
-
+  const { mode } = useContext(ColorModeContext);
   const [theme, setTheme] = useState(getTheme(mode));
 
   useEffect(() => {
@@ -33,15 +32,31 @@ function App() {
   }, [mode]);
 
   return (
-    <ThemeProvider theme={theme}>
-      <LanguageContextProvider>
+    <CssVarProvider theme={extendedDarkTheme} defaultMode="dark">
+      <ThemeProvider theme={theme}>
         <StyledBackground>
-          <Header mode={mode} setMode={setMode} />
+          <Header />
           <Navigator />
         </StyledBackground>
-      </LanguageContextProvider>
-    </ThemeProvider>
+      </ThemeProvider>
+    </CssVarProvider>
   );
 }
 
-export default App;
+const WrapperC = ({ children }) => {
+  return (
+    <ColorModeProvider>
+      <LanguageContextProvider>{children}</LanguageContextProvider>
+    </ColorModeProvider>
+  );
+};
+
+const WrapperApp = () => {
+  return (
+    <WrapperC>
+      <App />
+    </WrapperC>
+  );
+};
+
+export default WrapperApp;

@@ -1,29 +1,13 @@
 import PokemonList from "../../components/PokemonList/PokemonList";
-import styled from "@emotion/styled";
-import { Box } from "@mui/material";
-
-const Container = styled.div`
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-  align-self: center;
-  width: 100%;
-  max-width: 1280px;
-`;
-
-const Inner = styled.div`
-  width: 100%;
-`;
+import classes from "./MainContainer.module.scss";
 
 const MainContainer = () => {
   return (
-    <Container>
-      <Inner>
-        <Box p={1}>
-          <PokemonList />
-        </Box>
-      </Inner>
-    </Container>
+    <div className={classes.main_container}>
+      <div className={classes.main_container_content}>
+        <PokemonList />
+      </div>
+    </div>
   );
 };
 

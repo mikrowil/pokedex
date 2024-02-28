@@ -556,7 +556,7 @@ abilities,against_bug,against_dark,against_dragon,against_electric,against_fairy
 "['Sheer Force', 'Zen Mode']",0.5,1,1,1,0.5,1,0.5,1,1,0.5,2,0.5,1,1,1,2,0.5,2,30,5120,70,540,60,Blazing Pokémon,105,1059860,1.3,105,Hihidarumaヒヒダルマ,Darmanitan,50,555,140,105,55,fire,fire,92.9,5,0
 "['Water Absorb', 'Chlorophyll', 'Storm Drain']",2,1,1,0.5,1,1,2,2,1,0.5,0.5,2,1,2,1,1,1,0.5,86,5120,70,461,255,Cactus Pokémon,67,1000000,1.0,75,Maracacchiマラカッチ,Maractus,50,556,106,67,60,grass,,28.0,5,0
 "['Sturdy', 'Shell Armor', 'Weak Armor']",1,1,1,1,1,1,1,1,1,1,1,1,0.5,0.5,1,2,2,2,65,5120,70,325,190,Rock Inn Pokémon,85,1000000,0.3,50,Ishizumaiイシズマイ,Dwebble,50,557,35,35,55,bug,rock,14.5,5,0
-"['Sturdy', 'Shell Armor', 'Weak Armor']",1,1,1,1,1,1,1,1,1,1,1,1,0.5,0.5,1,2,2,2,105,5120,70,485,75,Stone Home Pokémon,125,1000000,1.4,70,Iwapalaceイワパレス,Crustle,50,558,65,75,45,bug,rock,200.0,5,0
+"['Sturdy', 'Shell Armor', 'Weak Armor']",1,1,1,1,1,1,1,1,1,1,1,1,0.5,0.5,1,2,2,2,105,5120,70,485,75,Stone Index Pokémon,125,1000000,1.4,70,Iwapalaceイワパレス,Crustle,50,558,65,75,45,bug,rock,200.0,5,0
 "['Shed Skin', 'Moxie', 'Intimidate']",1,0.25,1,1,4,2,1,2,0.5,1,1,1,1,1,0,0.5,1,1,75,3840,35,348,180,Shedding Pokémon,70,1000000,0.6,50,Zurugguズルッグ,Scraggy,50,559,35,70,48,dark,fighting,11.8,5,0
 "['Shed Skin', 'Moxie', 'Intimidate']",1,0.25,1,1,4,2,1,2,0.5,1,1,1,1,1,0,0.5,1,1,90,3840,70,488,90,Hoodlum Pokémon,115,1000000,1.1,65,Zuruzukinズルズキン,Scrafty,50,560,45,115,58,dark,fighting,30.0,5,0
 "['Wonder Skin ', 'Magic Guard', 'Tinted Lens']",1,2,1,2,1,0.25,1,1,2,0.5,0,2,1,1,0.5,2,1,1,58,5120,70,490,45,Avianoid Pokémon,80,1000000,1.4,72,Symbolerシンボラー,Sigilyph,50,561,103,80,97,psychic,flying,14.0,5,0

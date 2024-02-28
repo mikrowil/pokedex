@@ -1,6 +1,6 @@
 import MainContainer from "../screens/MainContainer/MainContainer";
 import DisplayPokemon from "../screens/DisplayPokemon";
-import Home from "../screens/Home";
+import Index from "../screens/Home";
 import SearchScreen from "../screens/SearchScreen";
 import WhoGameScreen from "../screens/WhoGameScreen";
 
@@ -9,7 +9,7 @@ const navigator = [
     pathName: "/",
     title: "default",
     exact: true,
-    component: Home,
+    component: Index,
   },
   {
     pathName: "/pokemon",

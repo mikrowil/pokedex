@@ -37,7 +37,7 @@ export default function Icon({
 }) {
   const theme = useTheme();
 
-  color =
+  const defaultColor =
     theme.palette.mode === "light"
       ? theme.palette.primary[800]
       : theme.palette.primary[300];
@@ -49,7 +49,7 @@ export default function Icon({
       isButton={!!onClick}
       className={"material-symbols-rounded"}
       size={size}
-      color={color}
+      color={color || defaultColor}
       fill={fill}
     >
       {name || children}

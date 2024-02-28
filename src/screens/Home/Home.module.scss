@@ -1,0 +1,32 @@
+@import "src/assets/styles/variables";
+.pokemon_img_dark{
+  position: absolute;
+  width: 800px;
+  height: 800px;
+  perspective: 2px;
+  opacity: 1;
+  transition: opacity 600ms ease-out;
+}
+
+.item{
+  display: flex;
+  cursor: pointer;
+  align-items: center;
+  border: 1px solid $primary200;
+  background-color: $paper;
+  padding: 1rem;
+  border-radius: 5px;
+  transition: background-color 100ms ease-in-out;
+
+  &:hover {
+    background-color: $btnHover;
+  }
+}
+
+.inner_container{
+  box-sizing: border-box;
+  position: relative;
+  max-width: 1280px;
+  margin: 1rem auto;
+  padding: 4rem 0;
+}

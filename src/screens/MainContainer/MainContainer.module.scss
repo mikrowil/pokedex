@@ -1,0 +1,12 @@
+@import "src/assets/styles/variables";
+
+.main_container {
+  box-sizing: border-box;
+  padding: 3rem 1rem 1rem 1rem;
+
+  .main_container_content {
+    width: 100%;
+    max-width: $maxContentWidth;
+    margin: 0 auto;
+  }
+}

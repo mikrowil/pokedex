@@ -15,11 +15,33 @@ const Card = styled(Box)(
       ${firstcolor ? firstcolor : "#424242"} 0%,
       ${secondcolor ? secondcolor : "#424242"}
     );
-    transition: min-height 70ms ease-in-out;
+    position: relative;
+    z-index: 1;
 
     :hover {
-      min-height: 14rem;
       cursor: ${props.clickable};
+      & #pokemon_image {
+        width: 7rem;
+      }
+    }
+    ::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        58deg,
+        ${firstcolor ? firstcolor : "#424242"} 25%,
+        ${secondcolor ? secondcolor : "#424242"}
+      );
+      opacity: 0;
+      transition: opacity 0.6s;
+      z-index: -1;
+    }
+    :hover::before {
+      opacity: 1;
     }
   `
 );
@@ -31,6 +53,15 @@ const ImageContainer = styled.div(
     justify-content: center;
     align-items: center;
     height: 12rem;
+  `
+);
+
+const PokemonImg = styled.img(
+  () => css`
+    -webkit-filter: drop-shadow(2px 2px 5px #222);
+    filter: drop-shadow(2px 2px 5px #222);
+    width: 5rem;
+    transition: width 0.1s linear;
   `
 );
 
@@ -53,10 +84,11 @@ export default function PokemonCard({
       onClick={onClick}
       firstcolor={getColor(firstType)}
       secondcolor={getColor(secondType)}
+      tabIndex={0}
     >
       <StyledTypography variant={"h5"}>{name}</StyledTypography>
       <ImageContainer>
-        <img src={img} alt={"pokemon sprite"} style={{ width: "8rem" }} />
+        <PokemonImg id={"pokemon_image"} src={img} alt={"pokemon sprite"} />
       </ImageContainer>
     </Card>
   );

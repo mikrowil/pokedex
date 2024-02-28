@@ -1,21 +1,32 @@
-import React, { useCallback, useContext, useEffect, useState } from "react";
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import pdata from "../assets/pokedex.json";
 import { LanguageContext } from "../contex/LanguageContext";
 import {
   Box,
   Button,
+  Checkbox,
+  CircularProgress,
   FormControlLabel,
   Grid,
   Switch,
   Typography,
+  useTheme,
 } from "@mui/material";
 import styled from "@emotion/styled";
 import { shuffle } from "../utilities/utils";
 import { css } from "@emotion/react";
 import { ONGOING, VICTORY } from "../constants/gameConstants";
+import Spacer from "../components/ui-kit/Spacer";
 
 const Container = styled.div`
-  max-width: 1280px;
+  padding-top: 4rem;
+  max-width: 800px;
   margin: 0 auto;
   width: 100%;
 `;
@@ -30,6 +41,26 @@ const PokemonImage = styled.img(
     filter: brightness(${show ? 1 : 0});
   `
 );
+
+const Control = styled(FormControlLabel)`
+  padding: 0 2rem;
+  box-sizing: border-box;
+  height: 4rem;
+  justify-content: space-between;
+  border: 1px solid ${({ theme }) => theme.palette.primary[200]};
+
+  & .MuiFormControlLabel-label {
+    font-size: 32px;
+  }
+
+  & .MuiCheckbox-root {
+    width: 2rem;
+  }
+
+  & .MuiSvgIcon-root {
+    font-size: 42px;
+  }
+`;
 
 export default function WhoGameScreen() {
   const [inProgress, setInProgress] = useState(false);
@@ -160,6 +191,7 @@ export default function WhoGameScreen() {
               start={() => setInProgress(true)}
               settings={settings}
               setSettings={setSettings}
+              pokedexLength={pokedex.length}
             />
           )}
         </Box>
@@ -168,7 +200,8 @@ export default function WhoGameScreen() {
   );
 }
 
-const Start = ({ start, settings, setSettings }) => {
+const Start = ({ start, settings, setSettings, pokedexLength }) => {
+  const theme = useTheme();
   const [genEntries, setGenEntries] = useState([]);
   const [typeEntries, setTypeEntries] = useState([]);
   useEffect(() => {
@@ -185,104 +218,164 @@ const Start = ({ start, settings, setSettings }) => {
   }, [settings.gen, settings.types]);
   return (
     <>
-      <Grid container spacing={2} display={"flex"} maxWidth={"190px"}>
-        <Grid item xs={12}>
-          <Button onClick={start} variant={"outlined"}>
-            Start
-          </Button>
+      <div>
+        <Grid container spacing={2}>
+          <Grid item xs={12}>
+            <Typography variant={"h6"}>
+              {pokedexLength} pokemon selected
+            </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <div>
+              <Grid container spacing={2}>
+                {genEntries.map((gen) => (
+                  <Grid item xs={12} key={gen.label}>
+                    <Control
+                      labelPlacement={"start"}
+                      onChange={(value) => {
+                        setSettings({
+                          ...settings,
+                          gen: {
+                            ...settings.gen,
+                            [gen.prop]: {
+                              label: gen.label,
+                              on: value.target.checked,
+                            },
+                          },
+                        });
+                      }}
+                      control={
+                        <Checkbox value={gen.value} checked={gen.value} />
+                      }
+                      label={gen.label}
+                    />
+                  </Grid>
+                ))}
+              </Grid>
+            </div>
+          </Grid>
+          <Grid item xs={12}>
+            <Spacer />
+            <div
+              style={{
+                border: `1px solid ${theme.palette.primary[200]}`,
+                borderRadius: 5,
+                padding: "1rem",
+              }}
+            >
+              <Grid container spacing={2}>
+                {typeEntries.map((type) => (
+                  <Grid item xs={12} sm={6} key={type.label}>
+                    <div style={{ display: "flex", justifyContent: "center" }}>
+                      <FormControlLabel
+                        style={{ width: 200, paddingLeft: "2.5rem" }}
+                        control={
+                          <Switch
+                            value={type.value}
+                            checked={type.value}
+                            onChange={(value) => {
+                              setSettings({
+                                ...settings,
+                                types: {
+                                  ...settings.types,
+                                  [type.prop]: {
+                                    label: type.label,
+                                    on: value.target.checked,
+                                  },
+                                },
+                              });
+                            }}
+                          />
+                        }
+                        label={type.label}
+                      />
+                    </div>
+                  </Grid>
+                ))}
+              </Grid>
+            </div>
+          </Grid>
+          <Grid item xs={12}>
+            <Button
+              size={"large"}
+              fullWidth
+              onClick={start}
+              variant={"contained"}
+            >
+              Start
+            </Button>
+          </Grid>
         </Grid>
-        {genEntries.map((gen) => (
-          <Grid item xs={12} key={gen.label}>
-            <div style={{ display: "flex" }}>
-              <FormControlLabel
-                control={
-                  <Switch
-                    value={gen.value}
-                    checked={gen.value}
-                    onChange={(value) => {
-                      setSettings({
-                        ...settings,
-                        gen: {
-                          ...settings.gen,
-                          [gen.prop]: {
-                            label: gen.label,
-                            on: value.target.checked,
-                          },
-                        },
-                      });
-                    }}
-                  />
-                }
-                label={gen.label}
-              />
-            </div>
-          </Grid>
-        ))}
-        {typeEntries.map((type) => (
-          <Grid item xs={12} key={type.label}>
-            <div style={{ display: "flex" }}>
-              <FormControlLabel
-                control={
-                  <Switch
-                    value={type.value}
-                    checked={type.value}
-                    onChange={(value) => {
-                      setSettings({
-                        ...settings,
-                        types: {
-                          ...settings.types,
-                          [type.prop]: {
-                            label: type.label,
-                            on: value.target.checked,
-                          },
-                        },
-                      });
-                    }}
-                  />
-                }
-                label={type.label}
-              />
-            </div>
-          </Grid>
-        ))}
-      </Grid>
+      </div>
     </>
   );
 };
 
-const Game = ({ menu, settings, pokedex = pdata }) => {
+const Game = ({ menu, pokedex = pdata }) => {
   const { language } = useContext(LanguageContext);
   const [selectedMon, setSelectedMon] = useState(null);
+  const [loadingPokemonImage, setLoadingPokemonImage] = useState(true);
   const [answers, setAnswers] = useState([]);
   const [gameData, setGameData] = useState({
     tries: 2,
     answer: null,
     status: ONGOING,
   });
+  const randomCountTracker = useRef({});
 
   const startGame = useCallback(() => {
-    setGameData({ tries: 2, status: ONGOING, answer: null });
+    setLoadingPokemonImage(true);
+    setGameData({
+      tries: 2,
+      status: ONGOING,
+      answer: null,
+    });
     let a = [];
+
     let tempPokedex = [...pokedex];
 
-    if (settings.gen.length) {
-    }
-    let r = Math.floor(Math.random() * pokedex.length);
-    let selected = tempPokedex.splice(r, 1)[0];
-
-    a.push(selected.name);
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < 4; i++) {
       a.push(
         tempPokedex.splice(
           Math.floor(Math.random() * (pokedex.length - (i + 1))),
           1
-        )[0].name
+        )[0]
       );
     }
 
-    setSelectedMon(selected);
+    a.sort((x, y) => {
+      let xCount = randomCountTracker.current[x.name.english];
+      let yCount = randomCountTracker.current[y.name.english];
+      if (!xCount) {
+        xCount = 0;
+      }
+      if (!yCount) {
+        yCount = 0;
+      }
+
+      if (xCount > yCount) {
+        return 1;
+      } else if (xCount < yCount) {
+        return -1;
+      } else {
+        return 0;
+      }
+    });
+    setSelectedMon(a[0]);
     setAnswers(shuffle(a));
-  }, [pokedex, settings.gen.length]);
+  }, [pokedex]);
+
+  useEffect(() => {
+    if (!selectedMon) return;
+    const newState = {
+      [selectedMon.name.english]: randomCountTracker.current[
+        selectedMon.name.english
+      ]
+        ? (randomCountTracker.current[selectedMon.name.english] += 1)
+        : 1,
+    };
+    randomCountTracker.current = { ...randomCountTracker.current, ...newState };
+  }, [selectedMon]);
 
   useEffect(() => {
     startGame();
@@ -314,48 +407,73 @@ const Game = ({ menu, settings, pokedex = pdata }) => {
     <>
       <div>
         <Typography variant={"h5"}>Who's that pokemon?</Typography>
-        <PokemonImage
-          show={isVictory()}
-          alt={"pokemon"}
-          width={"150px"}
-          src={selectedMon?.image ? selectedMon.image.thumbnail : ""}
-        />
+        <div
+          style={{
+            height: "180px",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <PokemonImage
+            show={isVictory()}
+            alt={"pokemon"}
+            width={"150px"}
+            height={"150px"}
+            style={!loadingPokemonImage ? {} : { display: "none" }}
+            src={selectedMon?.image ? selectedMon.image.thumbnail : ""}
+            onLoad={() => {
+              setLoadingPokemonImage(false);
+            }}
+          />
+          {loadingPokemonImage && <CircularProgress size={64} />}
+        </div>
         <Typography variant={"body1"}>{showName()}</Typography>
       </div>
-      <div style={{ marginTop: "1rem" }}>
-        <div style={{ display: "flex" }}>
-          {answers.map((name) => (
-            <div key={name["english"]} style={{ margin: "1rem" }}>
+      <Grid
+        container
+        spacing={2}
+        style={{ marginTop: "1rem", maxWidth: 800, width: "100%" }}
+      >
+        {answers.map((name) => (
+          <Grid item xs={12} sm={6} key={name.name["english"]}>
+            <Button
+              size={"large"}
+              variant={"contained"}
+              fullWidth
+              onClick={() => guess(name.name[language])}
+            >
+              {name.name[language]}
+            </Button>
+          </Grid>
+        ))}
+        {isVictory() ? (
+          <>
+            <Grid display={"flex"} item xs={6} justifyContent={"flex-end"}>
               <Button
-                variant={"contained"}
-                onClick={() => guess(name[language])}
+                style={{ marginTop: "1rem" }}
+                fullWidth
+                variant={"outlined"}
+                onClick={menu}
               >
-                {name[language]}
-              </Button>
-            </div>
-          ))}
-        </div>
-      </div>
-      {isVictory() ? (
-        <div style={{ display: "inline-block" }}>
-          <Grid
-            container
-            spacing={1}
-            style={{ display: "flex", marginTop: "1rem" }}
-          >
-            <Grid item xs={6}>
-              <Button variant={"outlined"} onClick={menu}>
                 Menu
               </Button>
             </Grid>
-            <Grid item xs={6}>
-              <Button variant={"outlined"} onClick={restart}>
+            <Grid
+              display={"flex"}
+              item
+              xs={6}
+              justifyContent={"flex-start"}
+              style={{ marginTop: "1rem" }}
+            >
+              <Button fullWidth variant={"outlined"} onClick={restart}>
                 Restart
               </Button>
             </Grid>
-          </Grid>
-        </div>
-      ) : null}
+          </>
+        ) : null}
+      </Grid>
     </>
   );
 };

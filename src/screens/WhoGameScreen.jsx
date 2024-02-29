@@ -219,93 +219,79 @@ const Start = ({ start, settings, setSettings, pokedexLength }) => {
   return (
     <>
       <div>
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <Typography variant={"h6"}>
-              {pokedexLength} pokemon selected
-            </Typography>
+        <Typography textAlign={"left"} variant={"h3"}>
+          {pokedexLength} pokemon selected
+        </Typography>
+        <Spacer amount={2} />
+        <div>
+          <Grid container spacing={2}>
+            {genEntries.map((gen) => (
+              <Grid item xs={6} key={gen.label}>
+                <Control
+                  style={{ display: "flex", margin: 0 }}
+                  labelPlacement={"start"}
+                  onChange={(value) => {
+                    setSettings({
+                      ...settings,
+                      gen: {
+                        ...settings.gen,
+                        [gen.prop]: {
+                          label: gen.label,
+                          on: value.target.checked,
+                        },
+                      },
+                    });
+                  }}
+                  control={<Checkbox value={gen.value} checked={gen.value} />}
+                  label={gen.label}
+                />
+              </Grid>
+            ))}
           </Grid>
-          <Grid item xs={12}>
-            <div>
-              <Grid container spacing={2}>
-                {genEntries.map((gen) => (
-                  <Grid item xs={12} key={gen.label}>
-                    <Control
-                      labelPlacement={"start"}
-                      onChange={(value) => {
-                        setSettings({
-                          ...settings,
-                          gen: {
-                            ...settings.gen,
-                            [gen.prop]: {
-                              label: gen.label,
-                              on: value.target.checked,
+        </div>
+        <Spacer amount={2} />
+        <div
+          style={{
+            border: `1px solid ${theme.palette.primary[200]}`,
+            borderRadius: 5,
+            padding: "1rem",
+          }}
+        >
+          <Grid container spacing={2}>
+            {typeEntries.map((type) => (
+              <Grid item xs={12} sm={6} key={type.label}>
+                <div style={{ display: "flex", justifyContent: "center" }}>
+                  <FormControlLabel
+                    style={{ width: 200, paddingLeft: "2.5rem" }}
+                    control={
+                      <Switch
+                        value={type.value}
+                        checked={type.value}
+                        onChange={(value) => {
+                          setSettings({
+                            ...settings,
+                            types: {
+                              ...settings.types,
+                              [type.prop]: {
+                                label: type.label,
+                                on: value.target.checked,
+                              },
                             },
-                          },
-                        });
-                      }}
-                      control={
-                        <Checkbox value={gen.value} checked={gen.value} />
-                      }
-                      label={gen.label}
-                    />
-                  </Grid>
-                ))}
-              </Grid>
-            </div>
-          </Grid>
-          <Grid item xs={12}>
-            <Spacer />
-            <div
-              style={{
-                border: `1px solid ${theme.palette.primary[200]}`,
-                borderRadius: 5,
-                padding: "1rem",
-              }}
-            >
-              <Grid container spacing={2}>
-                {typeEntries.map((type) => (
-                  <Grid item xs={12} sm={6} key={type.label}>
-                    <div style={{ display: "flex", justifyContent: "center" }}>
-                      <FormControlLabel
-                        style={{ width: 200, paddingLeft: "2.5rem" }}
-                        control={
-                          <Switch
-                            value={type.value}
-                            checked={type.value}
-                            onChange={(value) => {
-                              setSettings({
-                                ...settings,
-                                types: {
-                                  ...settings.types,
-                                  [type.prop]: {
-                                    label: type.label,
-                                    on: value.target.checked,
-                                  },
-                                },
-                              });
-                            }}
-                          />
-                        }
-                        label={type.label}
+                          });
+                        }}
                       />
-                    </div>
-                  </Grid>
-                ))}
+                    }
+                    label={type.label}
+                  />
+                </div>
               </Grid>
-            </div>
+            ))}
           </Grid>
-          <Grid item xs={12}>
-            <Button
-              size={"large"}
-              fullWidth
-              onClick={start}
-              variant={"contained"}
-            >
-              Start
-            </Button>
-          </Grid>
-        </Grid>
+        </div>
+        <Spacer />
+        <Button size={"large"} fullWidth onClick={start} variant={"contained"}>
+          Start
+        </Button>
       </div>
     </>
   );

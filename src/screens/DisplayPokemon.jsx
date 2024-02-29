@@ -268,7 +268,7 @@ export default function DisplayPokemon() {
                   ))}
                 </Grid>
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={12} sm={6}>
                 <Spacer amount={2} />
                 <SectionHeader
                   title={"Abilities"}
@@ -311,7 +311,7 @@ export default function DisplayPokemon() {
                   ))}
                 </Section>
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={12} sm={6}>
                 <Spacer amount={2} />
                 <SectionHeader
                   title={"Moves"}
@@ -360,24 +360,14 @@ export default function DisplayPokemon() {
                 />
                 <Section>
                   {moves.map(({ move, level }: Object) => (
-                    <Grid
-                      container
-                      key={move.name}
-                      display={"flex"}
-                      alignItems={"center"}
-                      spacing={1}
-                    >
+                    <div style={{ display: "flex" }}>
                       {level ? (
-                        <Grid item xs={3} sm={2} md={1}>
-                          <Typography>LV: {level}</Typography>
-                        </Grid>
+                        <Typography width={"4rem"}>LV: {level}</Typography>
                       ) : null}
-                      <Grid item xs={"auto"} md={3}>
-                        <Typography style={{ marginLeft: 10 }}>
-                          {move.name}
-                        </Typography>
-                      </Grid>
-                    </Grid>
+                      <Typography style={{ marginLeft: 10 }}>
+                        {move.name}
+                      </Typography>
+                    </div>
                   ))}
                 </Section>
               </Grid>

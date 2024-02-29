@@ -2,7 +2,6 @@ import React from "react";
 import { Grid } from "@mui/material";
 import Typography from "../../components/ui-kit/Typography";
 import { useNavigate } from "react-router-dom";
-import imgPokemonDark from "../../assets/g.png";
 import classes from "./Home.module.scss";
 
 const features = [
@@ -18,12 +17,7 @@ const features = [
 
 export default function Home() {
   return (
-    <div>
-      <img
-        src={imgPokemonDark}
-        alt={"Gengar"}
-        className={classes.pokemon_img_dark}
-      />
+    <div style={{ padding: "1rem" }}>
       <div className={classes.inner_container}>
         <Grid container spacing={4}>
           <Paths />

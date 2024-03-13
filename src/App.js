@@ -2,6 +2,7 @@ import "./App.css";
 import Header from "./components/Header/Header";
 import {
   Experimental_CssVarsProvider as CssVarProvider,
+  StyledEngineProvider,
   ThemeProvider,
 } from "@mui/material";
 import Navigator from "./components/Navigator";
@@ -32,14 +33,16 @@ function App() {
   }, [mode]);
 
   return (
-    <CssVarProvider theme={extendedDarkTheme} defaultMode="dark">
-      <ThemeProvider theme={theme}>
-        <StyledBackground>
-          <Header />
-          <Navigator />
-        </StyledBackground>
-      </ThemeProvider>
-    </CssVarProvider>
+    <StyledEngineProvider injectFirst={true}>
+      <CssVarProvider theme={extendedDarkTheme} defaultMode="dark">
+        <ThemeProvider theme={theme}>
+          <StyledBackground>
+            <Header />
+            <Navigator />
+          </StyledBackground>
+        </ThemeProvider>
+      </CssVarProvider>
+    </StyledEngineProvider>
   );
 }
 

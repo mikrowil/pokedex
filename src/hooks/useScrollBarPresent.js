@@ -9,6 +9,9 @@ export const useScrollTop = () => {
     window.scrollTo({ top: 0, left: 0, behavior: "auto" });
   }, [location]);
 };
+
+//* Sets padding to replicate the scrollbars when it's not present on the screen.
+//  This stops the content from moving left and right when navigating.
 export const useScrollBarPresent = () => {
   const scrollbarWidth = getScrollbarWidth();
   const bodyScrollable = useBodyScrollable();

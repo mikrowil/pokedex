@@ -5,8 +5,8 @@ import React, {
   useRef,
   useState,
 } from "react";
-import pdata from "../assets/pokedex.json";
-import { LanguageContext } from "../contex/LanguageContext";
+import pdata from "../../assets/pokedex.json";
+import { LanguageContext } from "../../contex/LanguageContext";
 import {
   Box,
   Button,
@@ -19,10 +19,10 @@ import {
   useTheme,
 } from "@mui/material";
 import styled from "@emotion/styled";
-import { shuffle } from "../utilities/utils";
+import { shuffle } from "../../utilities/utils";
 import { css } from "@emotion/react";
-import { ONGOING, VICTORY } from "../constants/gameConstants";
-import Spacer from "../components/ui-kit/Spacer";
+import { ONGOING, VICTORY } from "../../constants/gameConstants";
+import Spacer from "../../components/ui-kit/Spacer";
 
 const Container = styled.div`
   padding-top: 4rem;

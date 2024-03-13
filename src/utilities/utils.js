@@ -7,6 +7,7 @@ export const convertDeciToMeter = (num) => {
   return (num / 10).toFixed(1);
 };
 
+//Stops the content from moving left and right when navigating to certain pages.
 export function getScrollbarWidth() {
   // Creating invisible container
   const outer = document.createElement("div");

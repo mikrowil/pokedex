@@ -20,10 +20,12 @@ const Card = styled(Box)(
 
     :hover {
       cursor: ${props.clickable};
+
       & #pokemon_image {
         width: 7rem;
       }
     }
+
     ::before {
       content: "";
       position: absolute;
@@ -40,6 +42,7 @@ const Card = styled(Box)(
       transition: opacity 0.6s;
       z-index: -1;
     }
+
     :hover::before {
       opacity: 1;
     }

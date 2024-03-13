@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 import { AppBar, Box, useScrollTrigger } from "@mui/material";
 import Typography from "../ui-kit/Typography";
 import { useNavigate } from "react-router-dom";
+import classes from "./index.module.scss";
 
 const Container = styled.div`
   box-sizing: border-box;
@@ -30,14 +31,19 @@ const Header = () => {
     <Container>
       <ElevationScroll>
         <AppBar elevation={0} variant={"elevation"}>
-          <Box padding={"0 1rem"}>
+          <Box padding={"0 2rem"}>
             <div
-              style={{ cursor: "pointer", padding: "0.5rem 0" }}
+              style={{
+                display: "inline-block",
+                cursor: "pointer",
+              }}
               onClick={() => {
                 navigate("/");
               }}
             >
-              <Typography variant={"h3"}>Pokedex</Typography>
+              <Typography variant={"h3"} className={classes.header_title}>
+                Pokedex
+              </Typography>
             </div>
           </Box>
         </AppBar>

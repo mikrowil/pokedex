@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 
+//Checks if the scrollbar appears on the page
 function useBodyScrollable() {
   const [bodyScrollable, setBodyScrollable] = useState(
     document.body.scrollHeight > window.innerHeight

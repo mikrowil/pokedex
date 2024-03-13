@@ -2,12 +2,13 @@ import MainContainer from "../screens/MainContainer/MainContainer";
 import DisplayPokemon from "../screens/DisplayPokemon";
 import Index from "../screens/Home";
 import SearchScreen from "../screens/SearchScreen";
-import WhoGameScreen from "../screens/WhoGameScreen";
+import WhoGameScreen from "../screens/WhoGameScreen/WhoGameScreen";
 
+//Holds the screens
 const navigator = [
   {
     pathName: "/",
-    title: "default",
+    title: "dashboard",
     exact: true,
     component: Index,
   },

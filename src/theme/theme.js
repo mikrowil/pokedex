@@ -194,6 +194,9 @@ export const extendedDarkTheme = experimental_extendTheme({
           paper: "#424242",
         },
         divider: "rgba(255, 255, 255, 0.12)",
+        AppBar: {
+          darkBg: "#303030",
+        },
       },
     },
   },

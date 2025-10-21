@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import pokeapi from "../api/pokeapi";
 
 //Fetches and stores the necessary data for a Pokémon.
-const usePokemonDetails = (name) => {
+const usePokemonDetails = (name: string) => {
   const [pokemon, setPokemon] = useState({
     abilities: [],
     base_experience: 0,

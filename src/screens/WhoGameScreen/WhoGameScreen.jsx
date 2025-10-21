@@ -6,7 +6,7 @@ import React, {
   useState,
 } from "react";
 import pdata from "../../assets/pokedex.json";
-import { LanguageContext } from "../../contex/LanguageContext";
+import { LanguageContext } from "../../context/LanguageContext";
 import {
   Box,
   Button,

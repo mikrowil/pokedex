@@ -1,0 +1,7 @@
+{
+  "id": 123,
+  "label": "Text field",
+  "key": "textField",
+  "validation": "string",
+  "required": true
+}

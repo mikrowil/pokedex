@@ -1,38 +1,28 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { Box, Grid, Skeleton, Typography, useTheme } from "@mui/material";
-import usePokemonDetails from "../hooks/usePokemonDetails";
+import usePokemonDetails from "../../hooks/usePokemonDetails";
 import styled from "@emotion/styled";
 import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
-import Icon from "../components/ui-kit/Icon";
-import { convertDeciToMeter, convertHectoToKilo } from "../utilities/utils";
-import { css } from "@emotion/react";
-import { getColor } from "../utilities/colors";
-import { cleanPokemonName } from "../utilities/stringModifiers";
-import Spacer from "../components/ui-kit/Spacer";
-
-const Container = styled.div`
-  box-sizing: border-box;
-  padding: 4rem 1rem 1rem 1rem;
-`;
-
-const InnerContainer = styled.div`
-  max-width: 1280px;
-  margin: 0 auto;
-  width: 100%;
-`;
-
-const Item = styled.div`
-  display: flex;
-  align-items: center;
-  border: ${({ theme }) => `1px solid ${theme.palette.primary.main}`};
-  padding: 1rem;
-  border-radius: 5px;
-`;
+import Icon from "../../components/ui-kit/Icon";
+import { convertDeciToMeter, convertHectoToKilo } from "../../utilities/utils";
+import { css, Theme } from "@emotion/react";
+import { getColor } from "../../utilities/colors";
+import { cleanPokemonName } from "../../utilities/stringModifiers";
+import Spacer from "../../components/ui-kit/Spacer";
+import classes from "./index.module.scss";
 
 const SectionTitle = styled(Typography)(
-  ({ theme, firstcolor, secondcolor }) => ({
+  ({
+    theme,
+    firstcolor,
+    secondcolor,
+  }: {
+    theme: Theme;
+    firstcolor: string;
+    secondcolor: string;
+  }) => ({
     fontWeight: 600,
     display: "inline",
     letterSpacing: 1.5,
@@ -113,23 +103,23 @@ export default function DisplayPokemon() {
       icon: "upgrade",
     },
     {
-      label: `HP: ${pokemon.stats[0]?.base_stat}`,
+      label: `HP: ${pokemon.stats[0].base_stat}`,
       icon: "favorite",
     },
     {
-      label: `ATK: ${pokemon.stats[1]?.base_stat}`,
+      label: `ATK: ${pokemon.stats[1].base_stat}`,
       icon: "swords",
     },
     {
-      label: `DEF: ${pokemon.stats[2]?.base_stat}`,
+      label: `DEF: ${pokemon.stats[2].base_stat}`,
       icon: "shield",
     },
     {
-      label: `SP-ATK: ${pokemon.stats[3]?.base_stat}`,
+      label: `SP-ATK: ${pokemon.stats[3].base_stat}`,
       icon: "stars",
     },
     {
-      label: `SP-DEF: ${pokemon.stats[4]?.base_stat}`,
+      label: `SP-DEF: ${pokemon.stats[4].base_stat}`,
       icon: "health_and_safety",
     },
   ];
@@ -183,8 +173,8 @@ export default function DisplayPokemon() {
   }, [filters.moves, pokemon]);
 
   return (
-    <Container>
-      <InnerContainer>
+    <div className={classes.display_pokemon_screen_container}>
+      <div className={classes.inner_container}>
         <Grid container spacing={2} alignItems={"stretch"}>
           <Grid item xs={12}>
             <Button
@@ -289,7 +279,7 @@ export default function DisplayPokemon() {
                   ]}
                 />
                 <Section>
-                  {abilities.map((ability: Object) => (
+                  {abilities.map((ability) => (
                     <Box
                       display={"flex"}
                       alignItems={"center"}
@@ -359,7 +349,7 @@ export default function DisplayPokemon() {
                   ]}
                 />
                 <Section>
-                  {moves.map(({ move, level }: Object) => (
+                  {moves.map(({ move, level }) => (
                     <div style={{ display: "flex" }}>
                       {level ? (
                         <Typography width={"4rem"}>LV: {level}</Typography>
@@ -408,17 +398,17 @@ export default function DisplayPokemon() {
             </>
           )}
         </Grid>
-      </InnerContainer>
-    </Container>
+      </div>
+    </div>
   );
 }
 
 const PropertyItem = ({ label, icon }) => {
   return (
-    <Item>
+    <div className={classes.item}>
       <Icon name={icon} size={42} style={{ marginRight: "1rem" }} />
       <Typography variant={"h4"}>{label}</Typography>
-    </Item>
+    </div>
   );
 };
 

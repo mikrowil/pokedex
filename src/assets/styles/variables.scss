@@ -13,9 +13,21 @@ $primary600: var(--mui-palette-primary-600);
 $primary700: var(--mui-palette-primary-700);
 $primary800: var(--mui-palette-primary-800);
 $primary900: var(--mui-palette-primary-900);
+$primaryMain: var(--mui-palette-primary-main);
 
 //Background
 $paper: var(--mui-palette-background-paper);
 
 //Custom
 $btnHover: var(--mui-palette-btnHover);
+
+.screen_container {
+  box-sizing: border-box;
+  padding: 4rem 1rem 1rem 1rem;
+
+  .inner_container {
+    max-width: 1280px;
+    margin: 0 auto;
+    width: 100%;
+  }
+}

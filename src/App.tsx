@@ -1,4 +1,6 @@
+import React, { PropsWithChildren } from "react";
 import "./App.css";
+import "./declarations.d.ts";
 import Header from "./components/Header/Header";
 import {
   Experimental_CssVarsProvider as CssVarProvider,
@@ -9,11 +11,17 @@ import Navigator from "./components/Navigator";
 import { useContext, useEffect, useState } from "react";
 import { darkTheme, extendedDarkTheme, lightTheme } from "./theme/theme";
 import StyledBackground from "./layout/StyledBackground/StyledBackground";
-import { LanguageContextProvider } from "./contex/LanguageContext";
-import { ColorModeContext, ColorModeProvider } from "./contex/ColorModeContext";
+import { LanguageContextProvider } from "./context/LanguageContext";
+import {
+  ColorModeContext,
+  ColorModeProvider,
+} from "./context/ColorModeContext";
 import "./assets/styles/variables.scss";
+import { AuthProvider } from "./context/AuthContext";
 
-const getTheme = (mode) => {
+type Mode = "light" | "dark";
+
+const getTheme = (mode: Mode) => {
   switch (mode) {
     case "light":
       return lightTheme;
@@ -33,20 +41,26 @@ function App() {
   }, [mode]);
 
   return (
-    <StyledEngineProvider injectFirst={true}>
-      <CssVarProvider theme={extendedDarkTheme} defaultMode="dark">
-        <ThemeProvider theme={theme}>
-          <StyledBackground>
-            <Header />
-            <Navigator />
-          </StyledBackground>
-        </ThemeProvider>
-      </CssVarProvider>
-    </StyledEngineProvider>
+    <AuthProvider>
+      <StyledEngineProvider injectFirst={true}>
+        <CssVarProvider theme={extendedDarkTheme} defaultMode="dark">
+          <ThemeProvider theme={theme}>
+            <StyledBackground>
+              <Header />
+              <div className={"screen_container"}>
+                <div className={"inner_container"}>
+                  <Navigator />
+                </div>
+              </div>
+            </StyledBackground>
+          </ThemeProvider>
+        </CssVarProvider>
+      </StyledEngineProvider>
+    </AuthProvider>
   );
 }
 
-const WrapperC = ({ children }) => {
+const WrapperC = ({ children }: PropsWithChildren) => {
   return (
     <ColorModeProvider>
       <LanguageContextProvider>{children}</LanguageContextProvider>

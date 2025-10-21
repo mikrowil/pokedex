@@ -1,8 +1,8 @@
-export const convertHectoToKilo = (num) => {
+export const convertHectoToKilo = (num: number) => {
   if (!num) return null;
   return (num / 10).toFixed(1);
 };
-export const convertDeciToMeter = (num) => {
+export const convertDeciToMeter = (num: number) => {
   if (!num) return null;
   return (num / 10).toFixed(1);
 };
@@ -24,12 +24,12 @@ export function getScrollbarWidth() {
   const scrollbarWidth = outer.offsetWidth - inner.offsetWidth;
 
   // Removing temporary elements from the DOM
-  outer.parentNode.removeChild(outer);
+  outer.parentNode?.removeChild(outer);
 
   return scrollbarWidth;
 }
 
-export function shuffle(array) {
+export function shuffle(array: { [key: string]: unknown }[]) {
   let currentIndex = array.length,
     randomIndex;
 

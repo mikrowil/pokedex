@@ -1,12 +1,15 @@
 import { useContext, useEffect, useState } from "react";
 import pokedex from "../assets/pokedex.json";
-import { LanguageContext } from "../contex/LanguageContext";
+import {
+  LanguageContext,
+  useLanguageContext,
+} from "../context/LanguageContext";
 
 //Allows the user to search for a Pokémon by name
 const useSearch = () => {
   const [inputValue, setInputValue] = useState("");
   const [result, setResult] = useState(pokedex);
-  const { language } = useContext(LanguageContext);
+  const { language } = useLanguageContext();
 
   useEffect(() => {
     if (inputValue.length > 0) {

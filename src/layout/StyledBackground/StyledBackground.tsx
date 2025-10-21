@@ -1,12 +1,12 @@
 import styled from "@emotion/styled";
-import { css } from "@emotion/react";
+import { css, Theme } from "@emotion/react";
 import {
   useScrollBarPresent,
   useScrollTop,
 } from "../../hooks/useScrollBarPresent";
 
 const Background = styled.div(
-  ({ theme, paddingRight }) => css`
+  ({ theme, paddingRight }: { theme: Theme; paddingRight: string }) => css`
     display: flex;
     flex: 1;
     background-color: ${theme.palette.background.default};

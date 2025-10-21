@@ -1,8 +1,19 @@
 import { createContext, useState } from "react";
 
-export const ColorModeContext = createContext();
+type ColorModeContextType = {
+  mode: string;
+  setMode: (mode: string) => void;
+};
 
-export const ColorModeProvider = ({ children }) => {
+export const ColorModeContext = createContext<ColorModeContextType | null>(
+  null
+);
+
+export const ColorModeProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
   const [mode, setMode] = useState(
     window.matchMedia &&
       window.matchMedia("(prefers-color-scheme: dark)").matches

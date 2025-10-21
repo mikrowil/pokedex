@@ -4,9 +4,5 @@ export const getPokemonByName = (name) => {
   if (!name) {
     return null;
   }
-  try {
-    const results = pokeapi.get(`/pokemon/${name}`);
-
-    return results;
-  } catch (e) {}
+  return pokeapi.get(`/pokemon/${name}`);
 };

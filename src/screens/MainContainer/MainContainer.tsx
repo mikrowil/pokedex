@@ -1,5 +1,6 @@
+import React from "react";
 import PokemonList from "../../components/PokemonList/PokemonList";
-import classes from "./MainContainer.module.scss";
+import classes from './MainContainer.module.scss';
 
 const MainContainer = () => {
   return (

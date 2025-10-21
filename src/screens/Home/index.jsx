@@ -13,15 +13,17 @@ const features = [
     title: "Who's that?",
     path: "/who",
   },
+  {
+    title: "Register",
+    path: "/register",
+  },
 ];
 
 export default function Home() {
   return (
     <div style={{ padding: "1rem" }}>
       <div className={classes.inner_container}>
-        <Grid container spacing={4}>
-          <Paths />
-        </Grid>
+        <Paths />
       </div>
     </div>
   );
@@ -30,7 +32,7 @@ export default function Home() {
 const Paths = () => {
   const navigate = useNavigate();
   return (
-    <>
+    <Grid container spacing={4}>
       {features.map((feature, index) => (
         <Grid key={index} item xs={12} md={6}>
           <div
@@ -43,6 +45,6 @@ const Paths = () => {
           </div>
         </Grid>
       ))}
-    </>
+    </Grid>
   );
 };

@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer"
+    },
+    "label": {
+      "type": "string"
+    },
+    "key": {
+      "type": "string"
+    },
+    "validation": {
+      "type": "string"
+    },
+    "required": {
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "id",
+    "label",
+    "key",
+    "validation",
+    "required"
+  ]
+}

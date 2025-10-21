@@ -1,21 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Autocomplete, Box, Grid, Pagination, TextField } from "@mui/material";
-import styled from "@emotion/styled";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import PokemonCard from "../ui-kit/PokemonCard";
 import { cleanPokemonName } from "../../utilities/stringModifiers";
 import useSearch from "../../hooks/useSearch";
-import { LanguageContext } from "../../contex/LanguageContext";
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-`;
+import { useLanguageContext } from "../../context/LanguageContext";
+import classes from "./index.module.scss";
 
 const PokemonList = () => {
   const navigate = useNavigate();
-  const { language } = useContext(LanguageContext);
+  const { language } = useLanguageContext();
   const [searchParams] = useSearchParams();
   const [page, setPage] = useState(Number(searchParams.get("page")));
   const [value, setValue] = useState(null);
@@ -23,7 +17,7 @@ const PokemonList = () => {
   const [pokemon, setPokemon] = useState([]);
   const [fullPokemon, setFullPokemon] = useState([]);
 
-  const handleNavigate = (pokemon) => {
+  const handleNavigate = (pokemon: any) => {
     navigate(
       `/pokemon/${cleanPokemonName(pokemon.name.english.toLowerCase())}`,
       {
@@ -32,11 +26,11 @@ const PokemonList = () => {
     );
   };
 
-  const paginationOnChange = (value) => {
+  const paginationOnChange = (value: any) => {
     navigate(`/pokemon?page=${value}`);
   };
 
-  const applySearchFilter = (value) => {
+  const applySearchFilter = (value: any) => {
     setValue(value);
     paginationOnChange(1);
   };
@@ -53,7 +47,7 @@ const PokemonList = () => {
   }, [searchParams]);
 
   return (
-    <Container>
+    <div className={classes.pokemon_list_container}>
       <Grid container spacing={2} style={{ display: "flex" }}>
         <Grid item xs={12}>
           <Box>
@@ -71,7 +65,7 @@ const PokemonList = () => {
               style={{ maxWidth: 400 }}
               renderInput={(params) => <TextField {...params} />}
               options={fullPokemon}
-              getOptionLabel={(option) => {
+              getOptionLabel={(option: any) => {
                 if (!option.name) return "";
                 return option.name[language];
               }}
@@ -79,7 +73,7 @@ const PokemonList = () => {
           </Box>
         </Grid>
         {pokemon &&
-          pokemon.map((pokemon) => (
+          pokemon.map((pokemon: any) => (
             <Grid
               xs={12}
               sm={6}
@@ -125,7 +119,7 @@ const PokemonList = () => {
           paginationOnChange(value);
         }}
       />
-    </Container>
+    </div>
   );
 };
 

@@ -1,11 +1,11 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Autocomplete, Box, Grid, Pagination, TextField } from "@mui/material";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import PokemonCard from "../ui-kit/PokemonCard";
 import { cleanPokemonName } from "../../utilities/stringModifiers";
 import useSearch from "../../hooks/useSearch";
-import { useLanguageContext } from "../../context/LanguageContext";
-import classes from "./index.module.scss";
+import { useLanguageContext } from "../../context/language-context";
+import { Pokemon } from "../../api/pokeapi";
 
 const PokemonList = () => {
   const navigate = useNavigate();
@@ -14,10 +14,10 @@ const PokemonList = () => {
   const [page, setPage] = useState(Number(searchParams.get("page")));
   const [value, setValue] = useState(null);
   const { inputValue, setInputValue, result } = useSearch();
-  const [pokemon, setPokemon] = useState([]);
-  const [fullPokemon, setFullPokemon] = useState([]);
+  const [pokemon, setPokemon] = useState<Pokemon[]>([]);
+  const [fullPokemon, setFullPokemon] = useState<Pokemon[]>([]);
 
-  const handleNavigate = (pokemon: any) => {
+  const handleNavigate = (pokemon: Pokemon) => {
     navigate(
       `/pokemon/${cleanPokemonName(pokemon.name.english.toLowerCase())}`,
       {
@@ -47,7 +47,7 @@ const PokemonList = () => {
   }, [searchParams]);
 
   return (
-    <div className={classes.pokemon_list_container}>
+    <div className={"flex flex-col flex-1"}>
       <Grid container spacing={2} style={{ display: "flex" }}>
         <Grid item xs={12}>
           <Box>
@@ -89,7 +89,6 @@ const PokemonList = () => {
             >
               {pokemon && (
                 <PokemonCard
-                  style={{ padding: "1rem" }}
                   name={pokemon.name[language]}
                   img={pokemon.image ? pokemon.image.thumbnail : ""}
                   firstType={

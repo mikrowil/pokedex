@@ -1,0 +1,93 @@
+export const BUG = "#A6B91A";
+export const DARK = "#705746";
+export const DRAGON = "#6F35FC";
+export const ELECTRIC = "#F7D02C";
+export const FAIRY = "#D685AD";
+export const FIGHTING = "#C22E28";
+export const FIRE = "#EE8130";
+export const FLYING = "#A98FF3";
+export const GHOST = "#735797";
+export const GRASS = "#7AC74C";
+export const GROUND = "#E2BF65";
+export const ICE = "#96D9D6";
+export const NORMAL = "#A8A77A";
+export const POISON = "#A33EA1";
+export const PSYCHIC = "#F95587";
+export const ROCK = "#B6A136";
+export const STEEL = "#B7B7CE";
+export const WATER = "#6390F0";
+
+export const TYPES = {
+  BUG: {
+    label: "Bug",
+    color: BUG,
+  },
+  DARK: {
+    label: "Dark",
+    color: DARK,
+  },
+  DRAGON: {
+    label: "Dragon",
+    color: DRAGON,
+  },
+  ELECTRIC: {
+    label: "Electric",
+    color: ELECTRIC,
+  },
+  FAIRY: {
+    label: "Fairy",
+    color: FAIRY,
+  },
+  FIGHTING: {
+    label: "Fighting",
+    color: FIGHTING,
+  },
+  FIRE: {
+    label: "Fire",
+    color: FIRE,
+  },
+  FLYING: {
+    label: "Flying",
+    color: FLYING,
+  },
+  GHOST: {
+    label: "Ghost",
+    color: GHOST,
+  },
+  GRASS: {
+    label: "Grass",
+    color: GRASS,
+  },
+  GROUND: {
+    label: "Ground",
+    color: GROUND,
+  },
+  ICE: {
+    label: "Ice",
+    color: ICE,
+  },
+  NORMAL: {
+    label: "Normal",
+    color: NORMAL,
+  },
+  POISON: {
+    label: "Poison",
+    color: POISON,
+  },
+  PSYCHIC: {
+    label: "Psychic",
+    color: PSYCHIC,
+  },
+  ROCK: {
+    label: "Rock",
+    color: ROCK,
+  },
+  STEEL: {
+    label: "Steel",
+    color: STEEL,
+  },
+  WATER: {
+    label: "Water",
+    color: WATER,
+  },
+};

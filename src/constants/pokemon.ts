@@ -17,7 +17,7 @@ import {
   WATER,
   PSYCHIC,
   DRAGON,
-} from "../theme/typeColors";
+} from "../theme/type-colors";
 
 export const types = [
   ELECTRIC,

@@ -4,15 +4,23 @@ import { login } from "../../../api/auth";
 import { loginUser } from "../../../manageSession";
 import { Button, Menu, TextField } from "@mui/material";
 
-const RegisterModal = ({ anchor, setAnchor }: any) => {
+const RegisterModal = ({
+  anchor,
+  open,
+  onClose,
+}: {
+  anchor: React.RefObject<HTMLElement>;
+  open: boolean;
+  onClose: () => void;
+}) => {
   return (
-    <Menu open={Boolean(anchor)} anchorEl={anchor}>
+    <Menu open={open} anchorEl={anchor.current as HTMLElement}>
       <Formik
         initialValues={{ username: "", password: "" }}
         onSubmit={async (values) => {
           const result = await login(values);
           loginUser(result.data);
-          setAnchor(null);
+          onClose();
         }}
       >
         {(formikProps) => (

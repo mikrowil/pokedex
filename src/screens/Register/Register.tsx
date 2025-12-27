@@ -3,7 +3,7 @@ import { Button, TextField, Typography } from "@mui/material";
 import { Form, Formik } from "formik";
 import Grid from "@mui/material/Unstable_Grid2";
 import { register_user } from "../../api/auth";
-import Spacer from "../../components/ui-kit/Spacer";
+import Spacer from "../../components/ui-kit/spacer";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 

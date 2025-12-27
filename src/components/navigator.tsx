@@ -9,7 +9,6 @@ export default function Navigator() {
         <Route
           key={route.title}
           path={route.pathName}
-          exact={route.exact}
           element={<route.component />}
         />
       ))}

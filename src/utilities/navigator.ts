@@ -1,9 +1,9 @@
-import MainContainer from "../screens/MainContainer/MainContainer";
-import DisplayPokemon from "../screens/DisplayPokemon/DisplayPokemon";
-import Index from "../screens/Home";
-import SearchScreen from "../screens/SearchScreen";
-import WhoGameScreen from "../screens/WhoGameScreen/WhoGameScreen";
-import Register from "../screens/Register/Register";
+import MainContainer from "../screens/display-pokemon-list/display-pokemon-list";
+import DisplayPokemon from "../screens/display-pokemon/display-pokemon";
+import Home from "../screens/home/home.tsx";
+import SearchScreen from "../screens/search-screen/search-screen";
+import WhoGameScreen from "../screens/who-game-screen/who-game-screen";
+import Register from "../screens/register/register";
 
 //Holds the screens
 const navigator = [
@@ -11,7 +11,7 @@ const navigator = [
     pathName: "/",
     title: "Dashboard",
     exact: true,
-    component: Index,
+    component: Home,
   },
   {
     pathName: "/register",

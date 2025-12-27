@@ -1,75 +1,33 @@
-import React, { useContext, useState } from "react";
-import { AppBar, Box, Button, useScrollTrigger } from "@mui/material";
+import React, { useRef, useState } from "react";
 import Typography from "../ui-kit/Typography";
 import { useNavigate } from "react-router-dom";
-import classes from "./index.module.scss";
-import cookie from "js-cookie";
-import RegisterModal from "./widgets/RegisterModal";
-import { AuthContext } from "../../context/AuthContext";
+import RegisterModal from "./widgets/register-modal";
 
-const Header = () => {
+export default function Header() {
   const navigate = useNavigate();
-  const [anchor, setAnchor] = useState();
-  const { user } = useContext(AuthContext);
-
-  const ElevationScroll = (props: {
-    children: React.ReactNode;
-    window?: () => Window;
-  }) => {
-    const { children, window } = props;
-
-    const trigger = useScrollTrigger({
-      disableHysteresis: true,
-      threshold: 0,
-      target: window ? window() : undefined,
-    });
-
-    return React.cloneElement(children, {
-      elevation: trigger ? 4 : 0,
-    });
-  };
+  const anchorRef = useRef(null);
+  const [open, setOpen] = useState(false);
 
   return (
-    <div className={classes.header}>
-      <ElevationScroll>
-        <AppBar elevation={0} variant={"elevation"}>
-          <Box padding={"0 2rem"}>
-            <div
-              style={{
-                display: "inline-block",
-                cursor: "pointer",
-              }}
-              onClick={() => {
-                navigate("/");
-              }}
-            >
-              <Typography variant={"h3"} className={classes.header_title}>
-                Pokedex
-              </Typography>
-            </div>
-            {user ? (
-              user.username
-            ) : (
-              <Button
-                onClick={(e) => setAnchor(e.currentTarget)}
-                size={"small"}
-              >
-                Login
-              </Button>
-            )}
-            <Button
-              onClick={() => {
-                cookie.set("userToken", null);
-              }}
-            >
-              Logout
-            </Button>
-            <RegisterModal anchor={anchor} setAnchor={setAnchor} />
-          </Box>
-        </AppBar>
-      </ElevationScroll>
+    <div className={"box-border p-4"}>
+      <div
+        style={{
+          display: "inline-block",
+          cursor: "pointer",
+        }}
+        onClick={() => {
+          navigate("/");
+        }}
+      >
+        <Typography variant={"h3"} className={"letter-spacing-12"}>
+          Pokedex
+        </Typography>
+      </div>
+      <RegisterModal
+        anchor={anchorRef}
+        open={open}
+        onClose={() => setOpen(false)}
+      />
     </div>
   );
-};
-
-export default Header;
+}

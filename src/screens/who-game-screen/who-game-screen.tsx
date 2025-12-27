@@ -6,7 +6,10 @@ import React, {
   useState,
 } from "react";
 import pdata from "../../assets/pokedex.json";
-import { LanguageContext } from "../../context/LanguageContext";
+import {
+  LanguageContext,
+  useLanguageContext,
+} from "../../context/language-context";
 import {
   Box,
   Button,
@@ -21,50 +24,15 @@ import {
 import styled from "@emotion/styled";
 import { shuffle } from "../../utilities/utils";
 import { css } from "@emotion/react";
-import { ONGOING, VICTORY } from "../../constants/gameConstants";
-import Spacer from "../../components/ui-kit/Spacer";
-
-const Container = styled.div`
-  padding-top: 4rem;
-  max-width: 800px;
-  margin: 0 auto;
-  width: 100%;
-`;
-
-const InnerContainer = styled.div`
-  width: 100%;
-`;
-
-const PokemonImage = styled.img(
-  ({ show }) => css`
-    margin: 1rem 0;
-    filter: brightness(${show ? 1 : 0});
-  `
-);
-
-const Control = styled(FormControlLabel)`
-  padding: 0 2rem;
-  box-sizing: border-box;
-  height: 4rem;
-  justify-content: space-between;
-  border: 1px solid ${({ theme }) => theme.palette.primary[200]};
-
-  & .MuiFormControlLabel-label {
-    font-size: 32px;
-  }
-
-  & .MuiCheckbox-root {
-    width: 2rem;
-  }
-
-  & .MuiSvgIcon-root {
-    font-size: 42px;
-  }
-`;
+import { ONGOING, VICTORY } from "../../constants/game-constants";
+import Spacer from "../../components/ui-kit/spacer";
+import { Pokemon, PokemonDetails } from "../../api/pokeapi";
 
 export default function WhoGameScreen() {
   const [inProgress, setInProgress] = useState(false);
-  const [pokedex: Array, setPokedex] = useState(pdata);
+  const [pokedex, setPokedex] = useState<Pokemon[]>(
+    pdata as unknown as Pokemon[]
+  );
   const [settings, setSettings] = useState({
     gen: {
       gen1: { on: false, label: "Gen one" },
@@ -89,8 +57,8 @@ export default function WhoGameScreen() {
   });
 
   const applyGenFilter = useCallback(
-    (dex) => {
-      let newDex = [];
+    (dex: Pokemon[]) => {
+      let newDex: Pokemon[] = [];
 
       if (settings.gen.gen1.on) {
         newDex = [...dex.slice(0, 151), ...newDex];
@@ -126,51 +94,9 @@ export default function WhoGameScreen() {
     [settings.gen]
   );
 
-  const applyTypeFilter = useCallback(
-    (dex) => {
-      let newDex = [];
-      dex.forEach((entry) => {
-        if (
-          entry.type.find((type: string) => {
-            let found = false;
-            Object.entries(settings.types).forEach(([x, y]) => {
-              if (x.toUpperCase() === type.toUpperCase()) {
-                if (y.on) {
-                  found = true;
-                }
-              }
-            });
-            return found;
-          })
-        ) {
-          newDex.push(entry);
-        }
-      });
-
-      if (newDex.length < 1) {
-        return dex;
-      } else {
-        return newDex;
-      }
-    },
-    [settings.types]
-  );
-
-  useEffect(() => {
-    const dex = pdata;
-    let newDex = applyGenFilter(dex);
-    newDex = applyTypeFilter(newDex);
-
-    if (newDex.length <= 0) {
-      setPokedex(dex);
-    } else {
-      setPokedex(newDex);
-    }
-  }, [applyGenFilter, applyTypeFilter, settings.gen]);
-
   return (
-    <Container>
-      <InnerContainer>
+    <div className="pt-16 pr-4 pl-4 pb-4">
+      <div>
         <Box
           p={1}
           display={"flex"}
@@ -181,11 +107,7 @@ export default function WhoGameScreen() {
           }}
         >
           {inProgress ? (
-            <Game
-              pokedex={pokedex}
-              menu={() => setInProgress(false)}
-              settings={settings}
-            />
+            <Game pokedex={pokedex} menu={() => setInProgress(false)} />
           ) : (
             <Start
               start={() => setInProgress(true)}
@@ -195,23 +117,45 @@ export default function WhoGameScreen() {
             />
           )}
         </Box>
-      </InnerContainer>
-    </Container>
+      </div>
+    </div>
   );
 }
 
-const Start = ({ start, settings, setSettings, pokedexLength }) => {
+const Start = ({
+  start,
+  settings,
+  setSettings,
+  pokedexLength,
+}: {
+  start: () => void;
+  settings: any;
+  setSettings: (settings: any) => void;
+  pokedexLength: number;
+}) => {
   const theme = useTheme();
-  const [genEntries, setGenEntries] = useState([]);
-  const [typeEntries, setTypeEntries] = useState([]);
+  const [genEntries, setGenEntries] = useState<
+    {
+      prop: string;
+      value: { gen: { on: boolean; label: string } };
+      label: string;
+    }[]
+  >([]);
+  const [typeEntries, setTypeEntries] = useState<
+    {
+      prop: string;
+      value: { types: { on: boolean; label: string } };
+      label: string;
+    }[]
+  >([]);
   useEffect(() => {
     setGenEntries(
-      Object.entries(settings.gen).map((gen) => {
+      Object.entries(settings.gen).map((gen: any) => {
         return { prop: gen[0], value: gen[1].on, label: gen[1].label };
       })
     );
     setTypeEntries(
-      Object.entries(settings.types).map((type) => {
+      Object.entries(settings.types).map((type: any) => {
         return { prop: type[0], value: type[1].on, label: type[1].label };
       })
     );
@@ -227,9 +171,9 @@ const Start = ({ start, settings, setSettings, pokedexLength }) => {
           <Grid container spacing={2}>
             {genEntries.map((gen) => (
               <Grid item xs={6} key={gen.label}>
-                <Control
+                <input
+                  type="checkbox"
                   style={{ display: "flex", margin: 0 }}
-                  labelPlacement={"start"}
                   onChange={(value) => {
                     setSettings({
                       ...settings,
@@ -242,45 +186,21 @@ const Start = ({ start, settings, setSettings, pokedexLength }) => {
                       },
                     });
                   }}
-                  control={<Checkbox value={gen.value} checked={gen.value} />}
-                  label={gen.label}
                 />
+                {gen.label}
               </Grid>
             ))}
           </Grid>
         </div>
         <Spacer amount={2} />
-        <div
-          style={{
-            border: `1px solid ${theme.palette.primary[200]}`,
-            borderRadius: 5,
-            padding: "1rem",
-          }}
-        >
+        <div>
           <Grid container spacing={2}>
             {typeEntries.map((type) => (
               <Grid item xs={12} sm={6} key={type.label}>
                 <div style={{ display: "flex", justifyContent: "center" }}>
                   <FormControlLabel
                     style={{ width: 200, paddingLeft: "2.5rem" }}
-                    control={
-                      <Switch
-                        value={type.value}
-                        checked={type.value}
-                        onChange={(value) => {
-                          setSettings({
-                            ...settings,
-                            types: {
-                              ...settings.types,
-                              [type.prop]: {
-                                label: type.label,
-                                on: value.target.checked,
-                              },
-                            },
-                          });
-                        }}
-                      />
-                    }
+                    control={<input type="checkbox" />}
                     label={type.label}
                   />
                 </div>
@@ -297,17 +217,23 @@ const Start = ({ start, settings, setSettings, pokedexLength }) => {
   );
 };
 
-const Game = ({ menu, pokedex = pdata }) => {
-  const { language } = useContext(LanguageContext);
-  const [selectedMon, setSelectedMon] = useState(null);
+const Game = ({
+  menu,
+  pokedex = pdata as unknown as Pokemon[],
+}: {
+  menu: () => void;
+  pokedex: Pokemon[];
+}) => {
+  const { language } = useLanguageContext();
+  const [selectedMon, setSelectedMon] = useState<Pokemon | null>(null);
   const [loadingPokemonImage, setLoadingPokemonImage] = useState(true);
-  const [answers, setAnswers] = useState([]);
+  const [answers, setAnswers] = useState<Pokemon[]>([]);
   const [gameData, setGameData] = useState({
     tries: 2,
     answer: null,
     status: ONGOING,
   });
-  const randomCountTracker = useRef({});
+  const randomCountTracker = useRef<any>({});
 
   const startGame = useCallback(() => {
     setLoadingPokemonImage(true);
@@ -347,8 +273,10 @@ const Game = ({ menu, pokedex = pdata }) => {
         return 0;
       }
     });
+
     setSelectedMon(a[0]);
     setAnswers(shuffle(a));
+    setLoadingPokemonImage(false);
   }, [pokedex]);
 
   useEffect(() => {
@@ -368,7 +296,8 @@ const Game = ({ menu, pokedex = pdata }) => {
   }, [startGame]);
 
   const guess = (name: string) => {
-    if (name === selectedMon.name[language]) {
+    if (!selectedMon) return;
+    if (name === selectedMon.name.english) {
       setGameData((prevState) => ({ ...prevState, status: VICTORY }));
     }
   };
@@ -379,7 +308,7 @@ const Game = ({ menu, pokedex = pdata }) => {
 
   const showName = () => {
     if (isVictory()) {
-      return selectedMon?.name[language];
+      return selectedMon?.name.english;
     } else {
       return "Who am I?";
     }
@@ -402,16 +331,12 @@ const Game = ({ menu, pokedex = pdata }) => {
             justifyContent: "center",
           }}
         >
-          <PokemonImage
-            show={isVictory()}
-            alt={"pokemon"}
-            width={"150px"}
-            height={"150px"}
-            style={!loadingPokemonImage ? {} : { display: "none" }}
-            src={selectedMon?.image ? selectedMon.image.thumbnail : ""}
-            onLoad={() => {
-              setLoadingPokemonImage(false);
-            }}
+          <img
+            src={selectedMon?.image.thumbnail}
+            alt="pokemon"
+            width={200}
+            height={200}
+            className="p-4"
           />
           {loadingPokemonImage && <CircularProgress size={64} />}
         </div>
@@ -424,14 +349,12 @@ const Game = ({ menu, pokedex = pdata }) => {
       >
         {answers.map((name) => (
           <Grid item xs={12} sm={6} key={name.name["english"]}>
-            <Button
-              size={"large"}
-              variant={"contained"}
-              fullWidth
-              onClick={() => guess(name.name[language])}
+            <button
+              className="w-full px-2 py-3 rounded-md bg-primary text-2xl font-bold "
+              onClick={() => guess(name.name.english)}
             >
-              {name.name[language]}
-            </Button>
+              {name.name.english}
+            </button>
           </Grid>
         ))}
         {isVictory() ? (

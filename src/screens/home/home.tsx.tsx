@@ -1,8 +1,7 @@
 import React from "react";
-import { Grid } from "@mui/material";
 import Typography from "../../components/ui-kit/Typography";
 import { useNavigate } from "react-router-dom";
-import classes from "./Home.module.scss";
+import logoSrc from "../../../public/pokelogo.png";
 
 const features = [
   {
@@ -21,10 +20,13 @@ const features = [
 
 export default function Home() {
   return (
-    <div style={{ padding: "1rem" }}>
-      <div className={classes.inner_container}>
-        <Paths />
-      </div>
+    <div className={"p-4"}>
+      <img
+        src={"/pokelogo.png"}
+        alt="logo"
+        className={"w-1/2 mx-auto max-w-64 pt-4 pb-10"}
+      />
+      <Paths />
     </div>
   );
 }
@@ -32,19 +34,21 @@ export default function Home() {
 const Paths = () => {
   const navigate = useNavigate();
   return (
-    <Grid container spacing={4}>
+    <div className={"grid grid-cols-1 md:grid-cols-2 gap-4"}>
       {features.map((feature, index) => (
-        <Grid key={index} item xs={12} md={6}>
+        <div key={index} className={"col-span-1 md:col-span-6"}>
           <div
-            className={classes.item}
+            className={
+              "display-flex cursor-pointer items-center border bg-primary bg-paper p-4 rounded-md transition-background-color 100ms ease-in-out hover:bg-btnHover"
+            }
             onClick={() => {
               navigate(feature.path);
             }}
           >
             <Typography variant={"h5"}>{feature.title}</Typography>
           </div>
-        </Grid>
+        </div>
       ))}
-    </Grid>
+    </div>
   );
 };

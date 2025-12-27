@@ -1,30 +1,11 @@
 import { useEffect, useState } from "react";
-import pokeapi from "../api/pokeapi";
+import pokeapi, { PokemonDetails, Species } from "../api/pokeapi";
 
 //Fetches and stores the necessary data for a Pokémon.
 const usePokemonDetails = (name: string) => {
-  const [pokemon, setPokemon] = useState({
-    abilities: [],
-    base_experience: 0,
-    forms: [],
-    game_indices: [],
-    height: 0,
-    held_items: [],
-    id: 0,
-    is_default: true,
-    location_area_encounters: "",
-    moves: [],
-    name: "",
-    order: 0,
-    past_types: [],
-    species: {},
-    sprites: {},
-    stats: [],
-    types: [],
-    weight: 0,
-  });
+  const [pokemon, setPokemon] = useState<PokemonDetails | null>(null);
 
-  const [species, setSpecies] = useState({});
+  const [species, setSpecies] = useState<Species | null>(null);
 
   const [isLoading, setIsLoading] = useState(false);
 

@@ -1,3 +1,5 @@
+import { Pokemon } from "../api/pokeapi";
+
 export const convertHectoToKilo = (num: number) => {
   if (!num) return null;
   return (num / 10).toFixed(1);
@@ -13,7 +15,7 @@ export function getScrollbarWidth() {
   const outer = document.createElement("div");
   outer.style.visibility = "hidden";
   outer.style.overflow = "scroll"; // forcing scrollbar to appear
-  outer.style.msOverflowStyle = "scrollbar"; // needed for WinJS apps
+
   document.body.appendChild(outer);
 
   // Creating inner element and placing it in the container
@@ -29,7 +31,7 @@ export function getScrollbarWidth() {
   return scrollbarWidth;
 }
 
-export function shuffle(array: { [key: string]: unknown }[]) {
+export function shuffle<T>(array: Pokemon[]) {
   let currentIndex = array.length,
     randomIndex;
 

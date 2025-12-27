@@ -1,8 +1,9 @@
-import { createContext, useState } from "react";
+import { createContext, useContext, useState } from "react";
+import { Mode } from "../interfaces/app-settings";
 
 type ColorModeContextType = {
-  mode: string;
-  setMode: (mode: string) => void;
+  mode: Mode;
+  setMode: (mode: Mode) => void;
 };
 
 export const ColorModeContext = createContext<ColorModeContextType | null>(
@@ -17,8 +18,8 @@ export const ColorModeProvider = ({
   const [mode, setMode] = useState(
     window.matchMedia &&
       window.matchMedia("(prefers-color-scheme: dark)").matches
-      ? "dark"
-      : "light"
+      ? ("dark" as Mode)
+      : ("light" as Mode)
   );
 
   const context = {
@@ -31,4 +32,12 @@ export const ColorModeProvider = ({
       {children}
     </ColorModeContext.Provider>
   );
+};
+
+export const useColorMode = () => {
+  const context = useContext(ColorModeContext);
+  if (!context) {
+    throw new Error("useColorMode must be used within a ColorModeProvider");
+  }
+  return context;
 };
